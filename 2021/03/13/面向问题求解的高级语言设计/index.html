@@ -1,0 +1,257 @@
+<!-- build time:Sat Mar 20 2021 08:23:15 GMT+0800 (中国标准时间) --><!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" type="application/rss+xml" title="Hexo" href="http://example.com/rss.xml"><link rel="alternate" type="application/atom+xml" title="Hexo" href="http://example.com/atom.xml"><link rel="alternate" type="application/json" title="Hexo" href="http://example.com/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><link rel="canonical" href="http://example.com/2021/03/13/%E9%9D%A2%E5%90%91%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3%E7%9A%84%E9%AB%98%E7%BA%A7%E8%AF%AD%E8%A8%80%E8%AE%BE%E8%AE%A1/"><title>面向问题求解的高级语言设计 | Ling Yunchi = Hexo</title><meta name="generator" content="Hexo 5.4.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">面向问题求解的高级语言设计</h1><div class="meta"><span class="item" title="Created: 2021-03-13 19:02:27"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">Posted on</span> <time itemprop="dateCreated datePublished" datetime="2021-03-13T19:02:27+08:00">2021-03-13</time></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="Toggle navigation bar"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Ling Yunchi</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipev1x5e4j20zk0m8b29.jpg"></li><li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclgi503lj20zk0m8hdt.jpg"></li><li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclgrvbd6j20zk0m8qv5.jpg"></li><li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipevo9j1jj20zk0m8e81.jpg"></li><li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicit31ffoj20zk0m8naf.jpg"></li><li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicli3sbvtj20zk0m8x6p.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">Home</a></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="en"><link itemprop="mainEntityOfPage" href="http://example.com/2021/03/13/%E9%9D%A2%E5%90%91%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3%E7%9A%84%E9%AB%98%E7%BA%A7%E8%AF%AD%E8%A8%80%E8%AE%BE%E8%AE%A1/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="John Doe"><meta itemprop="description" content=", "></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Hexo"></span><div class="body md" itemprop="articleBody"><h1 id="枚举"><a class="anchor" href="#枚举">#</a> 枚举</h1><p><strong>注意：通过一些条件缩小枚举范围</strong></p><h2 id="搜索枚举"><a class="anchor" href="#搜索枚举">#</a> 搜索枚举</h2><p>可以使用 dfs 来枚举每一种符合条件的情况，再对符合条件的情况进行检验<br><a href="#quanli">例题</a></p><h2 id="高斯消元与枚举"><a class="anchor" href="#高斯消元与枚举">#</a> 高斯消元与枚举</h2><p>高斯消元即是矩阵方程求解的方法，使用计算机模拟手工计算</p><p>在某些必定有解的题目中使用高斯消元化简方程，再使用枚举可以降低枚举量</p><p><a href="#gaosimuban">高斯消元模板</a></p><p><a href="#gaosi">例题</a></p><h2 id="stl中的全排列函数next_permutation"><a class="anchor" href="#stl中的全排列函数next_permutation">#</a> stl 中的全排列函数 next_permutation</h2><p>需要某些数据的全排列进行枚举时可以使用 stl 中的 permutation 来使用数据的全排列 qwqq</p><ol><li 3="" 1="" 2=""><p>next_permutation：求下一个排列组合</p><ul><li>函数模板：next_permutation (arr, arr+size);</li><li>参数说明：<ul><li>arr： 数组名</li><li>size：数组元素个数</li></ul></li><li>函数功能： 返回值为 bool 类型，当当前序列不存在下一个排列时，函数返回 false，否则返回 true，排列好的数在数组中存储</li><li>注意：在使用前需要对欲排列数组按升序排序，否则只能找出该序列之后的全排列数。<ul><li 3="" 2="" 1="">比如，如果数组 num 初始化为 2,3,1，那么输出就变为了：{2 3 1}</li></ul></li></ul></li><li><p>prev_permutation：求上一个排列组合</p><ul><li>函数模板：prev_permutation (arr, arr+size);</li><li>参数说明：<ul><li>arr： 数组名</li><li>size：数组元素个数</li></ul></li><li>函数功能： 返回值为 bool 类型，当当前序列不存在上一个排列时，函数返回 false，否则返回 true</li><li>注意：在使用前需要对欲排列数组按降序排序，否则只能找出该序列之后的全排列数。</li></ul></li></ol><p><mark>该函数是以字典序排序</mark></p><p><a href="#sanguosha">例题</a></p><h1 id="查找"><a class="anchor" href="#查找">#</a> 查找</h1><h2 id="二分"><a class="anchor" href="#二分">#</a> 二分</h2><ul><li>二分查找也称折半查找（Binary Search），它是一种效率较高的查找方法</li><li>要求查找的线性表是有单调性的（这样可以做到排除一半）</li></ul><p><strong>二分答案：</strong></p><p>在答案所在的范围内使用二分查找法查找答案，根据每次查找的结果缩小答案所在范围，最后找出答案。</p><p>何时使用？</p><ul><li>与答案相关的变量有单调性</li><li>即随着答案的变大，这个变量会单调递减 / 递增</li><li>相当于我们在一个一次函数上二分寻找目标点</li><li>出现最大值最小 / 最小值最大时可以考虑</li></ul><pre><code class="language-c++">int binary(int l, int r)
+&#123;
+    int ans = 0;
+    while (l &lt;= r)
+    &#123;
+        int mid = (l + r) &gt;&gt; 1;
+        //此处是查找符合条件的最大值
+        if (check(mid))
+            ans = mid, r = mid + 1;
+        else
+            l = mid + 1;
+        // 查找最小值
+        // if(check(mid))
+        //     ans = mid, r = mid + 1;
+        // else
+        //     l = mid + 1;
+    &#125;
+    return ans;
+&#125;
+</code></pre><p>例题: <a href="#tiaoshitou">跳石头</a></p><h2 id="三分"><a class="anchor" href="#三分">#</a> 三分</h2><h3 id="前提"><a class="anchor" href="#前提">#</a> <strong>前提</strong></h3><p>三分搜索适用于具有凹凸性的函数，如图所示为一个具有凸性质的函数（注意不一定为一个标准的二次函数，只需要在<strong>唯一</strong>极值<strong>两端的单调性不同</strong>即可）在这个函数中我们就可以使用三分搜索。</p><ul><li><p>对于一个有<strong>极大值的单峰函数</strong>，当 f (lm)&gt;f (rm) 时，只会有两种情况：</p><ol><li><p>lm 在对称轴左边，rm 在对称轴右边</p></li><li><p>lm 和 rm 都在对称轴右边</p></li></ol></li><li><p>回想二次函数图像，一定可以舍掉右边的区间</p></li><li><p>&lt; 的情况同理</p></li><li><p>每次舍掉 1/3, 复杂度 O (2log3 (n)), 比二分要慢</p></li></ul><pre><code class="language-c++">const int eps = 1e-6;
+double T_search(double l, double r)
+&#123;
+    double lm = (l + l + r) / 3, rm = (l + r + r) / 3;
+    if(f(lm)&gt;f(rm)) r = rm;
+    else l = lm;
+&#125;
+</code></pre><h1 id="例题"><a class="anchor" href="#例题">#</a> 例题</h1><p>&lt;a name=&quot;quanli&quot;&gt;1-1&lt;/a&gt;</p><p><img data-src="C:%5CUsers%5C10051%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210316105816771.png" alt="image-20210316105816771"></p><p>&lt;a name=&quot;gaosi&quot;&gt;1-2&lt;/a&gt;</p><p><img data-src="C:%5CUsers%5C10051%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210316110911010.png" alt="image-20210316110911010"></p><pre><code class="language-c++">#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+#include &lt;math.h&gt;
+using namespace std;
+
+int arr[10][10];
+int x[10];
+int sum;
+
+int Gauss(int m, int n)//矩阵行数列数
+&#123;
+	int row = 0, col = 0;
+	while (row &lt; m &amp;&amp; col &lt; n)
+	&#123;
+		if (arr[row][col] == 0)
+			for (int i = row + 1; i &lt; m; i++)
+				if (arr[i][col])
+					for (int j = col; j &lt;= n; j++)
+						swap(arr[i][j], arr[row][j]);
+
+		if (arr[row][col] == 0)
+		&#123;
+			col++;
+			continue;
+		&#125;
+
+		for (int i = row + 1; i &lt; m; i++) 
+			if (arr[i][col])
+			&#123;
+				//因为这里使用的是int型,所以消列首元素不一定为1
+				int ta = arr[i][col];//被消列首元素大小
+				int tb = arr[row][col];//消列首元素大小
+				for (int j = col; j &lt;= n; j++)
+				&#123;
+					arr[i][j] = arr[i][j] * tb - arr[row][j] * ta;//使被消列首元素为0
+					arr[i][j] = (arr[i][j] % 4 + 4) % 4;//使该数亦然在0-4范围内
+				&#125;
+			&#125;
+		row++;
+		col++;
+	&#125;
+
+	for (int i = n - 1; i &gt;= 0; i--)
+	&#123;
+		int temp = arr[i][n];
+		for (int j = i + 1; j &lt; n; j++) 
+			if (arr[i][j])
+				temp -= arr[i][j] * x[j];
+		temp = (temp % 4 + 4) % 4;
+
+		//此处开始枚举
+		for (x[i] = 0; x[i] &lt;= 3; x[i]++)  // 转5次和转1次没区别，所以只有4种
+			if ((x[i] * arr[i][i] % 4 + 4) % 4 == temp) // 依题意必定有解,所以找到解之后回代到上面去继续求其他未知数的值qwqq
+				break;
+		sum += x[i];
+	&#125;
+	return 0;
+&#125;
+
+int main()
+&#123;
+	//    freopen(&quot;in.txt&quot;,&quot;r&quot;,stdin);
+
+	arr[0][0] = arr[1][0] = arr[3][0] = arr[4][0] = 1;
+	arr[0][1] = arr[1][1] = arr[2][1] = 1;
+	arr[1][2] = arr[2][2] = arr[4][2] = arr[5][2] = 1;
+	arr[0][3] = arr[3][3] = arr[6][3] = 1;
+	arr[1][4] = arr[3][4] = arr[4][4] = arr[5][4] = arr[7][4] = 1;
+	arr[2][5] = arr[5][5] = arr[8][5] = 1;
+	arr[3][6] = arr[4][6] = arr[6][6] = arr[7][6] = 1;
+	arr[6][7] = arr[7][7] = arr[8][7] = 1;
+	arr[4][8] = arr[5][8] = arr[7][8] = arr[8][8] = 1;
+
+	for (int i = 0; i &lt; 9; i++)
+	&#123;
+		scanf(&quot;%d&quot;, &amp;arr[i][9]);
+		arr[i][9] = (4 - arr[i][9]) % 4; // 将钟的位置转化为要转的次数
+	&#125;
+	Gauss(9, 9);
+	for (int j = 0; j &lt; 9; j++)
+		while (x[j])
+		&#123;
+			printf(&quot;%d&quot;, j + 1);
+			x[j]--;
+			sum--;
+			printf(sum &gt; 0 ? &quot; &quot; : &quot;\n&quot;);
+		&#125;
+&#125;
+</code></pre><p>&lt;a name=&quot;sanguosha&quot;&gt;1-3&lt;/a&gt;</p><p><img data-src="C:%5CUsers%5C10051%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210316111158152.png" alt="image-20210316111158152"></p><pre><code class="language-c++">#include &lt;iostream&gt;
+#include&lt;algorithm&gt;
+#include &lt;map&gt;
+#include &lt;string&gt;
+using namespace std;
+map&lt;string, int&gt; my;
+int N, Map[10], restCard[10];
+string ans;
+char tab[7][20];
+bool win;
+void check()
+&#123;
+    int eneny[] = &#123; 0,1,2,3,4,5,6 &#125;;
+    //cout&lt;&lt;n&lt;&lt;&quot;  &quot;&lt;&lt;endl;
+    do &#123;
+        int i = 0, j = 0;
+        while (i &lt; N &amp;&amp; j &lt; N)
+        &#123;
+            if (1 &lt;&lt; Map[i] &amp; restCard[eneny[j]]) i++;
+            else j++;
+        &#125;
+        if (i == N) return;
+    &#125; while (next_permutation(eneny, eneny + N));
+    string tmp = &quot;&quot;;
+    for (int i = 0; i &lt; N; i++)
+    &#123;
+        if (i) tmp += &quot; &quot;;
+        tmp += string(tab[Map[i]]);
+    &#125;
+    win = true;
+    if (ans == &quot;&quot; || ans &gt; tmp) ans = tmp;
+&#125;
+int main()
+&#123;
+    int t, ncas = 1;
+    scanf(&quot;%d&quot;, &amp;t);
+    for (; ncas &lt;= t; ncas++)
+    &#123;
+        char name[20];
+        scanf(&quot;%d&quot;, &amp;N);
+        for (int i = 0; i &lt; N; i++)
+        &#123;
+            getchar();
+            scanf(&quot;%s&quot;, name);
+            strcpy(tab[i], name);
+            my[string(name)] = i;
+        &#125;
+        memset(restCard, 0, sizeof(restCard));
+        for (int i = 0; i &lt; N; i++)
+        &#123;
+            int m;
+            scanf(&quot;%d&quot;, &amp;m);
+            getchar();
+            for (int j = 0; j &lt; m; j++)
+            &#123;
+                scanf(&quot;%s&quot;, name);
+                restCard[i] |= 1 &lt;&lt; my[string(name)];
+            &#125;
+        &#125;
+        win = false;
+        for (int i = 0; i &lt; N; i++)
+            Map[i] = i;
+        ans = &quot;&quot;;
+        do &#123;
+            check();
+        &#125; while (next_permutation(Map, Map + N));
+        printf(&quot;Case %d: &quot;, ncas);
+        puts(win ? &quot;Yes&quot; : &quot;No&quot;);
+        if (win)
+            cout &lt;&lt; ans &lt;&lt; endl;
+    &#125;
+    system(&quot;PAUSE&quot;);
+    return 0;
+&#125;
+</code></pre><p>&lt;a name='gaosimuban'&gt; 高斯消元模板 &lt;/a&gt;</p><p><span class="exturl" data-url="aHR0cHM6Ly93d3cubHVvZ3UuY29tLmNuL3Byb2JsZW0vUDMzODk=">洛谷 p3389</span></p><pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cmath&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+const int MAXN = 1000;
+const double eps = 1e-10;
+void swap(double&amp; a, double&amp; b)
+&#123;
+    double tmp = a;
+    a = b;
+    b = tmp;
+&#125;
+
+int n;//矩阵的阶数
+double arr[MAXN][MAXN];//矩阵及增广矩阵
+double ans[MAXN];//答案向量
+int gauss() &#123;
+    int r, c;//row, column
+    for (r = 0, c = 0; c &lt; n; c++)                              //现在在消第c列的元
+    &#123;                            
+        int t = r;                                              //这里找到第c列r行及其之下中最大非0元素,将其行与目前行交换
+        for (int i = r; i &lt; n; i++)
+            if (fabs(arr[i][c]) &gt; fabs(arr[t][c])) t = i;
+        if (fabs(arr[t][c]) &lt; eps) continue;                    //此处判断是否该列第r行及其以下所有元素是否均为0,若均为0则不需要消元
+        for (int i = c; i &lt;= n; i++) swap(arr[t][i], arr[r][i]);//交换两行,这里包括增广矩阵的一列,所以为'&lt;=n'
+        for (int i = n; i &gt;= c; i--) arr[r][i] /= arr[r][c];    //从后往前依此除以该行第一个非0元素,将该非0元素变成1
+
+        //此处开始消元
+        for (int i = r + 1; i &lt; n; i++)                         //从第r+1行开始,下面每一行减去r行的对应倍数使首非0元素为0
+            if (fabs(arr[i][c]) &gt; eps)
+                for (int j = n; j &gt;= c; j--)
+                    arr[i][j] -= arr[r][j] * arr[i][c];         //这里就是第i行减去 arr[i][c]*第r行 使得arr[i][c] -= arr[i][c] * arr[r][c] (arr[r][c]=1)
+
+        r++;                                                    //切换到下一行
+    &#125;
+    //此处消元结束，r即为矩阵的行秩，判断是否有解
+    if (r &lt; n)                                                  //行秩小于行数，判断增广矩阵中最后一列在r行之后是否有非0数
+    &#123;                                                           //若无则方程有无数解，若有则方程无解
+        for (int i = r; i &lt; n; i++)
+            if (arr[i][n]) return 0;//无解
+        return 1;//有无数解
+    &#125;
+    //行满秩，m=n
+    for (int i = n - 1; i &gt;= 0; i--)                            //回代求解
+        for (int j = i + 1; j &lt; n; j++)                         
+            arr[i][n] -= arr[i][j] * arr[j][n];
+    for (int i = 0; i &lt; n; i++)
+        ans[i] = arr[i][n];
+    return 2;//有唯一解
+&#125;
+int main()
+&#123;
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 0; i &lt; n; i++)
+        for (int j = 0; j &lt;= n; j++)
+            scanf(&quot;%lf&quot;, &amp;arr[i][j]);
+    int a = gauss();
+    if (a != 2) cout &lt;&lt; &quot;No Solution&quot; &lt;&lt; endl;
+    else
+    &#123;
+        for (int i = 0; i &lt; n; i++)
+            printf(&quot;%.2lf\n&quot;, ans[i]);
+    &#125;
+    return 0;
+&#125;
+</code></pre></div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i> </span><span class="text">Edited on</span> <time title="Modified: 2021-03-18 09:19:35" itemprop="dateModified" datetime="2021-03-18T09:19:35+08:00">2021-03-18</time></span></div><div class="reward"><button><i class="ic i-heartbeat"></i> Donate</button><p>Give me a cup of [coffee]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/wechatpay.png" alt="John Doe WeChat Pay"><p>WeChat Pay</p></div><div><img data-src="/images/alipay.png" alt="John Doe Alipay"><p>Alipay</p></div><div><img data-src="/images/paypal.png" alt="John Doe PayPal"><p>PayPal</p></div></div></div><div id="copyright"><ul><li class="author"><strong>Post author: </strong>John Doe <i class="ic i-at"><em>@</em></i>Hexo</li><li class="link"><strong>Post link: </strong><a href="http://example.com/2021/03/13/%E9%9D%A2%E5%90%91%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3%E7%9A%84%E9%AB%98%E7%BA%A7%E8%AF%AD%E8%A8%80%E8%AE%BE%E8%AE%A1/" title="面向问题求解的高级语言设计">http://example.com/2021/03/13/面向问题求解的高级语言设计/</a></li><li class="license"><strong>Copyright Notice: </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2021/03/13/javaWeb/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipexe4oykj20zk0m87ji.jpg" title="javaWeb"><span class="type">Previous Post</span> <span class="category"><i class="ic i-flag"></i></span><h3>javaWeb</h3></a></div><div class="item right"><a href="/2021/03/18/hello-world/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicm0fdw5cj20zk0m8hdt.jpg" title="Hello World"><span class="type">Next Post</span> <span class="category"><i class="ic i-flag"></i></span><h3>Hello World</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="Contents"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE"><span class="toc-number">1.</span> <span class="toc-text">枚举</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2%E6%9E%9A%E4%B8%BE"><span class="toc-number">1.1.</span> <span class="toc-text">搜索枚举</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E6%96%AF%E6%B6%88%E5%85%83%E4%B8%8E%E6%9E%9A%E4%B8%BE"><span class="toc-number">1.2.</span> <span class="toc-text">高斯消元与枚举</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stl%E4%B8%AD%E7%9A%84%E5%85%A8%E6%8E%92%E5%88%97%E5%87%BD%E6%95%B0next_permutation"><span class="toc-number">1.3.</span> <span class="toc-text">stl 中的全排列函数 next_permutation</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE"><span class="toc-number">2.</span> <span class="toc-text">查找</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%88%86"><span class="toc-number">2.1.</span> <span class="toc-text">二分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E5%88%86"><span class="toc-number">2.2.</span> <span class="toc-text">三分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E6%8F%90"><span class="toc-number">2.2.1.</span> <span class="toc-text">前提</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">例题</span></a></li></ol></div><div class="related panel pjax" data-title="Related"></div><div class="overview panel" data-title="Overview"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="John Doe" data-src="/images/avatar.jpg"><p class="name" itemprop="name">John Doe</p><div class="description" itemprop="description"></div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">32</span> <span class="name">posts</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL3lvdXJuYW1l" title="https:&#x2F;&#x2F;github.com&#x2F;yourname"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;twitter.com&#x2F;yourname"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;yourname"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvdXNlci9ob21lP2lkPXlvdXJpZA==" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;yourid"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;about.me&#x2F;yourname"><i class="ic i-address-card"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>Home</a></li><li class="item"><a href="/about/" rel="section"><i class="ic i-user"></i>About</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>Posts</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>Archives</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>Categories</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>Tags</a></li></ul></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/2021/03/13/javaWeb/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2021/03/18/hello-world/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"></div><div class="status"><div class="copyright">&copy; 2010 – <span itemprop="copyrightYear">2021</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">John Doe @ Ling Yunchi</span></div><div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"2021/03/13/面向问题求解的高级语言设计/",favicon:{show:"（●´3｀●）Goooood",hide:"(´Д｀)Booooom"},search:{placeholder:"Search for Posts",empty:"We didn't find any results for the search: ${query}",stats:"${hits} results found in ${time} ms"},valine:!0,fancybox:!0,copyright:'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',ignores:[function(e){return e.includes("#")},function(e){return new RegExp(LOCAL.path+"$").test(e)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script></body></html><!-- rebuild by hrmmi -->
