@@ -1,75 +1,75 @@
-<!-- build time:Mon Aug 09 2021 22:03:49 GMT+0800 (GMT+08:00) --><!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" type="application/rss+xml" title="QWQ" href="https://ling-yunchi.github.io/rss.xml"><link rel="alternate" type="application/atom+xml" title="QWQ" href="https://ling-yunchi.github.io/atom.xml"><link rel="alternate" type="application/json" title="QWQ" href="https://ling-yunchi.github.io/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><link rel="canonical" href="https://ling-yunchi.github.io/2021/01/22/c++%E9%9A%8F%E6%89%8B%E7%AC%94%E8%AE%B0/"><title>c++随手笔记 | Ling Yunchi = QWQ</title><meta name="generator" content="Hexo 5.4.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">c++随手笔记</h1><div class="meta"><span class="item" title="创建时间：2021-01-22 22:33:18"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2021-01-22T22:33:18+08:00">2021-01-22</time></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Ling Yunchi</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipeyvx1d4j20zk0m8hdt.jpg"></li><li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gicm0n457cj20zk0m8e81.jpg"></li><li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gicliierfjj20zk0m8npd.jpg"></li><li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipevgoki5j20zk0m84qp.jpg"></li><li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclh3brzpj20zk0m8ann.jpg"></li><li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giph4fomxoj20zk0m8axp.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://ling-yunchi.github.io/2021/01/22/c++%E9%9A%8F%E6%89%8B%E7%AC%94%E8%AE%B0/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Ling yunchi"><meta itemprop="description" content=", qwqqqq"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="QWQ"></span><div class="body md" itemprop="articleBody"><h2 id="内存分区模型"><a href="#内存分区模型" class="headerlink" title="内存分区模型"></a>内存分区模型</h2><p>C++程序在执行时，将内存大方向划分为<strong>4个区域</strong></p><ul><li>代码区：存放函数体的二进制代码，由操作系统进行管理的</li><li>全局区：存放全局变量和静态变量以及常量</li><li>栈区：由编译器自动分配释放, 存放函数的参数值,局部变量等</li><li>堆区：由程序员分配和释放,若程序员不释放,程序结束时由操作系统回收</li></ul><p><strong>内存四区意义：</strong></p><p>不同区域存放的数据，赋予不同的生命周期, 给我们更大的灵活编程</p><h3 id="程序运行前"><a href="#程序运行前" class="headerlink" title="程序运行前"></a>程序运行前</h3><p>在程序编译后，生成了exe可执行程序，<strong>未执行该程序前</strong>分为两个区域</p><p><strong>代码区：</strong></p><p>存放 CPU 执行的机器指令</p><p>代码区是<strong>共享</strong>的，共享的目的是对于频繁被执行的程序，只需要在内存中有一份代码即可</p><p>代码区是<strong>只读</strong>的，使其只读的原因是防止程序意外地修改了它的指令</p><p><strong>全局区：</strong></p><p>全局变量和静态变量存放在此.</p><p>全局区还包含了常量区, 字符串常量和其他常量也存放在此.</p><p>==该区域的数据在程序结束后由操作系统释放==.</p><p>总结：</p><ul><li>C++中在程序运行前分为全局区和代码区</li><li>代码区特点是共享和只读</li><li>全局区中存放全局变量、静态变量、常量</li><li>常量区中存放 const修饰的全局常量 和 字符串常量</li></ul><h3 id="程序运行后"><a href="#程序运行后" class="headerlink" title="程序运行后"></a>程序运行后</h3><p><strong>栈区：</strong></p><p>由编译器自动分配释放, 存放函数的参数值,局部变量等</p><p>注意事项：不要返回局部变量的地址，栈区开辟的数据由编译器自动释放</p><p><strong>堆区：</strong></p><p>由程序员分配释放,若程序员不释放,程序结束时由操作系统回收</p><p>在C++中主要利用new在堆区开辟内存</p><h2 id="new运算符"><a href="#new运算符" class="headerlink" title="new运算符"></a>new运算符</h2><p>C++中利用==new==操作符在堆区开辟数据</p><p>​ 堆区开辟的数据，由程序员手动开辟，手动释放，释放利用操作符 ==delete==</p><p>​ 语法：<code>new 数据类型</code></p><p>​ 利用new创建的数据，会返回该数据对应的类型的指针</p><h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><h3 id="引用的基本使用"><a href="#引用的基本使用" class="headerlink" title="引用的基本使用"></a>引用的基本使用</h3><p>**作用： **给变量起别名</p><p><strong>语法：</strong> <code>数据类型 &amp;别名 = 原名</code></p><h3 id="引用做函数参数"><a href="#引用做函数参数" class="headerlink" title="引用做函数参数"></a>引用做函数参数</h3><p><strong>作用：</strong>函数传参时，可以利用引用的技术让形参修饰实参</p><p><strong>优点：</strong>可以简化指针修改实参</p><blockquote><p>总结：通过引用参数产生的效果同按地址传递是一样的。引用的语法更清楚简单</p></blockquote><h3 id="引用做函数返回值"><a href="#引用做函数返回值" class="headerlink" title="引用做函数返回值"></a>引用做函数返回值</h3><p>作用：引用是可以作为函数的返回值存在的</p><p>注意：<strong>不要返回局部变量引用</strong></p><p>用法：函数调用作为左值</p><ul><li><p><code>test02() = 1000;</code></p></li><li><pre><code class="c++">//返回静态变量引用
+<!-- build time:Mon Aug 09 2021 22:26:03 GMT+0800 (GMT+08:00) --><!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" type="application/rss+xml" title="QWQ" href="https://ling-yunchi.github.io/rss.xml"><link rel="alternate" type="application/atom+xml" title="QWQ" href="https://ling-yunchi.github.io/atom.xml"><link rel="alternate" type="application/json" title="QWQ" href="https://ling-yunchi.github.io/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><link rel="canonical" href="https://ling-yunchi.github.io/2021/01/22/c++%E9%9A%8F%E6%89%8B%E7%AC%94%E8%AE%B0/"><title>c++随手笔记 | Ling Yunchi = QWQ</title><meta name="generator" content="Hexo 5.4.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">c++随手笔记</h1><div class="meta"><span class="item" title="创建时间：2021-01-22 22:33:18"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2021-01-22T22:33:18+08:00">2021-01-22</time></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Ling Yunchi</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giph47e9vtj20zk0m8x6l.jpg"></li><li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipeuibk9fj20zk0m8ay2.jpg"></li><li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipev1x5e4j20zk0m8b29.jpg"></li><li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipeu7txpzj20zk0m81kx.jpg"></li><li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipexw3o58j20zk0m8e81.jpg"></li><li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipesx5fdwj20zk0m81kx.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://ling-yunchi.github.io/2021/01/22/c++%E9%9A%8F%E6%89%8B%E7%AC%94%E8%AE%B0/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Ling yunchi"><meta itemprop="description" content=", qwqqqq"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="QWQ"></span><div class="body md" itemprop="articleBody"><h2 id="内存分区模型"><a class="anchor" href="#内存分区模型">#</a> 内存分区模型</h2><p>C++ 程序在执行时，将内存大方向划分为<strong> 4 个区域</strong></p><ul><li>代码区：存放函数体的二进制代码，由操作系统进行管理的</li><li>全局区：存放全局变量和静态变量以及常量</li><li>栈区：由编译器自动分配释放，存放函数的参数值，局部变量等</li><li>堆区：由程序员分配和释放，若程序员不释放，程序结束时由操作系统回收</li></ul><p><strong>内存四区意义：</strong></p><p>不同区域存放的数据，赋予不同的生命周期，给我们更大的灵活编程</p><h3 id="程序运行前"><a class="anchor" href="#程序运行前">#</a> 程序运行前</h3><p>在程序编译后，生成了 exe 可执行程序，<strong>未执行该程序前</strong>分为两个区域</p><p><strong>代码区：</strong></p><p>存放 CPU 执行的机器指令</p><p>代码区是<strong>共享</strong>的，共享的目的是对于频繁被执行的程序，只需要在内存中有一份代码即可</p><p>代码区是<strong>只读</strong>的，使其只读的原因是防止程序意外地修改了它的指令</p><p><strong>全局区：</strong></p><p>全局变量和静态变量存放在此.</p><p>全局区还包含了常量区，字符串常量和其他常量也存放在此.</p><p><mark>该区域的数据在程序结束后由操作系统释放</mark>.</p><p>总结：</p><ul><li>C++ 中在程序运行前分为全局区和代码区</li><li>代码区特点是共享和只读</li><li>全局区中存放全局变量、静态变量、常量</li><li>常量区中存放 const 修饰的全局常量 和 字符串常量</li></ul><h3 id="程序运行后"><a class="anchor" href="#程序运行后">#</a> 程序运行后</h3><p><strong>栈区：</strong></p><p>由编译器自动分配释放，存放函数的参数值，局部变量等</p><p>注意事项：不要返回局部变量的地址，栈区开辟的数据由编译器自动释放</p><p><strong>堆区：</strong></p><p>由程序员分配释放，若程序员不释放，程序结束时由操作系统回收</p><p>在 C++ 中主要利用 new 在堆区开辟内存</p><h2 id="new运算符"><a class="anchor" href="#new运算符">#</a> new 运算符</h2><p>C++ 中利用<mark> new</mark> 操作符在堆区开辟数据</p><p>​	堆区开辟的数据，由程序员手动开辟，手动释放，释放利用操作符 <mark>delete</mark></p><p>​	语法： <code>new 数据类型</code></p><p>​	利用 new 创建的数据，会返回该数据对应的类型的指针</p><h2 id="引用"><a class="anchor" href="#引用">#</a> 引用</h2><h3 id="引用的基本使用"><a class="anchor" href="#引用的基本使用">#</a> 引用的基本使用</h3><p>** 作用： ** 给变量起别名</p><p><strong>语法：</strong> <code>数据类型 &amp;别名 = 原名</code></p><h3 id="引用做函数参数"><a class="anchor" href="#引用做函数参数">#</a> 引用做函数参数</h3><p>** 作用：** 函数传参时，可以利用引用的技术让形参修饰实参</p><p>** 优点：** 可以简化指针修改实参</p><blockquote><p>总结：通过引用参数产生的效果同按地址传递是一样的。引用的语法更清楚简单</p></blockquote><h3 id="引用做函数返回值"><a class="anchor" href="#引用做函数返回值">#</a> 引用做函数返回值</h3><p>作用：引用是可以作为函数的返回值存在的</p><p>注意：<strong>不要返回局部变量引用</strong></p><p>用法：函数调用作为左值</p><ul><li><p><code>test02() = 1000;</code></p></li><li><pre><code class="language-c++">//返回静态变量引用
 int&amp; test02() &#123;
-    static int a = 20;
-    return a;
+	static int a = 20;
+	return a;
 &#125;
-</code></pre></li></ul><h3 id="引用的本质"><a href="#引用的本质" class="headerlink" title="引用的本质"></a>引用的本质</h3><p>本质：<strong>引用的本质在c++内部实现是一个指针常量.</strong></p><p>结论：C++推荐用引用技术，因为语法方便，引用本质是指针常量，但是所有的指针操作编译器都帮我们做了</p><h3 id="常量引用"><a href="#常量引用" class="headerlink" title="常量引用"></a>常量引用</h3><p><strong>作用：</strong>常量引用主要用来修饰形参，防止误操作</p><p>在函数形参列表中，可以加==const修饰形参==，防止形参改变实参</p><pre><code class="c++">//引用使用的场景，通常用来修饰形参
+</code></pre></li></ul><h3 id="引用的本质"><a class="anchor" href="#引用的本质">#</a> 引用的本质</h3><p>本质：<strong>引用的本质在 c++ 内部实现是一个指针常量.</strong></p><p>结论：C++ 推荐用引用技术，因为语法方便，引用本质是指针常量，但是所有的指针操作编译器都帮我们做了</p><h3 id="常量引用"><a class="anchor" href="#常量引用">#</a> 常量引用</h3><p>** 作用：** 常量引用主要用来修饰形参，防止误操作</p><p>在函数形参列表中，可以加<mark> const 修饰形参</mark>，防止形参改变实参</p><pre><code class="language-c++">//引用使用的场景，通常用来修饰形参
 void showValue(const int&amp; v) &#123;
-    //v += 10;
-    cout &lt;&lt; v &lt;&lt; endl;
+	//v += 10;
+	cout &lt;&lt; v &lt;&lt; endl;
 &#125;
 
 int main() &#123;
 
-    //int&amp; ref = 10;  引用本身需要一个合法的内存空间，因此这行错误
-    //加入const就可以了，编译器优化代码，int temp = 10; const int&amp; ref = temp;
-    const int&amp; ref = 10;
+	//int&amp; ref = 10;  引用本身需要一个合法的内存空间，因此这行错误
+	//加入const就可以了，编译器优化代码，int temp = 10; const int&amp; ref = temp;
+	const int&amp; ref = 10;
 
-    //ref = 100;  //加入const后不可以修改变量
-    cout &lt;&lt; ref &lt;&lt; endl;
+	//ref = 100;  //加入const后不可以修改变量
+	cout &lt;&lt; ref &lt;&lt; endl;
 
-    //函数中利用常量引用防止误操作修改实参
-    int a = 10;
-    showValue(a);
+	//函数中利用常量引用防止误操作修改实参
+	int a = 10;
+	showValue(a);
 
-    system(&quot;pause&quot;);
+	system(&quot;pause&quot;);
 
-    return 0;
+	return 0;
 &#125;
-</code></pre><h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h3 id="函数默认参数"><a href="#函数默认参数" class="headerlink" title="函数默认参数"></a>函数默认参数</h3><p>在C++中，函数的形参列表中的形参是可以有默认值的。</p><p>语法：<code>返回值类型 函数名 （参数= 默认值）&#123;&#125;</code></p><ol><li>如果某个位置参数有默认值，那么从这个位置往后，从左向右，必须都要有默认值</li><li>如果函数声明有默认值，函数实现的时候就不能有默认参数</li></ol><pre><code class="c++">//在函数头里设定默认值
+</code></pre><h2 id="函数"><a class="anchor" href="#函数">#</a> 函数</h2><h3 id="函数默认参数"><a class="anchor" href="#函数默认参数">#</a> 函数默认参数</h3><p>在 C++ 中，函数的形参列表中的形参是可以有默认值的。</p><p>语法： <code>返回值类型 函数名 （参数= 默认值）&#123;&#125;</code></p><ol><li>如果某个位置参数有默认值，那么从这个位置往后，从左向右，必须都要有默认值</li><li>如果函数声明有默认值，函数实现的时候就不能有默认参数</li></ol><pre><code class="language-c++">//在函数头里设定默认值
 int func(int a, int b = 10, int c = 10) &#123;
-    return a + b + c;
+	return a + b + c;
 &#125;
 在函数声明里设定默认值
 int func2(int a = 10, int b = 10);
 int func2(int a, int b) &#123;
-    return a + b;
+	return a + b;
 &#125;
-</code></pre><h3 id="函数占位参数"><a href="#函数占位参数" class="headerlink" title="函数占位参数"></a>函数占位参数</h3><p>C++中函数的形参列表里可以有占位参数，用来做占位，调用函数时必须填补该位置</p><p><strong>语法：</strong> <code>返回值类型 函数名 (数据类型)&#123;&#125;</code></p><pre><code class="c++">//函数占位参数 ，占位参数也可以有默认参数
+</code></pre><h3 id="函数占位参数"><a class="anchor" href="#函数占位参数">#</a> 函数占位参数</h3><p>C++ 中函数的形参列表里可以有占位参数，用来做占位，调用函数时必须填补该位置</p><p><strong>语法：</strong> <code>返回值类型 函数名 (数据类型)&#123;&#125;</code></p><pre><code class="language-c++">//函数占位参数 ，占位参数也可以有默认参数
 void func(int a, int) &#123;
-    cout &lt;&lt; &quot;this is func&quot; &lt;&lt; endl;
+	cout &lt;&lt; &quot;this is func&quot; &lt;&lt; endl;
 &#125;
 int main() &#123;
-    func(10,10); //占位参数必须填补
+	func(10,10); //占位参数必须填补
 
-    return 0;
+	return 0;
 &#125;
-</code></pre><h3 id="函数重载"><a href="#函数重载" class="headerlink" title="函数重载"></a>函数重载</h3><h4 id="函数重载概述"><a href="#函数重载概述" class="headerlink" title="函数重载概述"></a>函数重载概述</h4><p><strong>作用：</strong>函数名可以相同，提高复用性</p><p><strong>函数重载满足条件：</strong></p><ul><li>同一个作用域下</li><li>函数名称相同</li><li>函数参数<strong>类型不同</strong> 或者 <strong>个数不同</strong> 或者 <strong>顺序不同</strong></li></ul><p><strong>注意:</strong> 函数的返回值不可以作为函数重载的条件</p><h4 id="函数重载注意事项"><a href="#函数重载注意事项" class="headerlink" title="函数重载注意事项"></a>函数重载注意事项</h4><ul><li>引用作为重载条件</li><li>函数重载碰到函数默认参数</li></ul><h2 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h2><p>C++面向对象的三大特性为：==封装、继承、多态==</p><p>C++认为==万事万物都皆为对象==，对象上有其属性和行为</p><h3 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h3><h4 id="封装的意义"><a href="#封装的意义" class="headerlink" title="封装的意义"></a>封装的意义</h4><p>封装是C++面向对象三大特性之一</p><p>封装的意义：</p><ul><li>将属性和行为作为一个整体，表现生活中的事物</li><li>将属性和行为加以权限控制</li></ul><p><strong>封装意义一：</strong></p><p>​ 在设计类的时候，属性和行为写在一起，表现事物</p><p><strong>语法：</strong> <code>class 类名&#123; 访问权限： 属性 / 行为 &#125;;</code></p><p><strong>封装意义二：</strong></p><p>类在设计时，可以把属性和行为放在不同的权限下，加以控制</p><p>访问权限有三种：</p><ol><li>public 公共权限<ul><li>类内可以访问 类外可以访问</li></ul></li><li>protected 保护权限<ul><li>类内可以访问 类外不可以访问 子类可以访问</li></ul></li><li>private 私有权限<ul><li>类内可以访问 类外不可以访问 子类不可访问</li></ul></li></ol><h4 id="struct和class区别"><a href="#struct和class区别" class="headerlink" title="struct和class区别"></a>struct和class区别</h4><p>在C++中 struct和class唯一的<strong>区别</strong>就在于 <strong>默认的访问权限不同</strong></p><p>区别：</p><ul><li>struct 默认权限为公共</li><li>class 默认权限为私有</li></ul><h4 id="成员属性设置为私有"><a href="#成员属性设置为私有" class="headerlink" title="成员属性设置为私有"></a>成员属性设置为私有</h4><p><strong>优点1：</strong>将所有成员属性设置为私有，可以自己控制读写权限</p><p><strong>优点2：</strong>对于写权限，我们可以检测数据的有效性</p><h3 id="对象的初始化和清理"><a href="#对象的初始化和清理" class="headerlink" title="对象的初始化和清理"></a>对象的初始化和清理</h3><ul><li>生活中我们买的电子产品都基本会有出厂设置，在某一天我们不用时候也会删除一些自己信息数据保证安全</li><li>C++中的面向对象来源于生活，每个对象也都会有初始设置以及 对象销毁前的清理数据的设置。</li></ul><h4 id="构造函数和析构函数"><a href="#构造函数和析构函数" class="headerlink" title="构造函数和析构函数"></a>构造函数和析构函数</h4><p>对象的<strong>初始化和清理</strong>也是两个非常重要的安全问题</p><p>​ 一个对象或者变量没有初始状态，对其使用后果是未知</p><p>​ 同样的使用完一个对象或变量，没有及时清理，也会造成一定的安全问题</p><p>c++利用了<strong>构造函数</strong>和<strong>析构函数</strong>解决上述问题，这两个函数将会被编译器自动调用，完成对象初始化和清理工作。</p><p>对象的初始化和清理工作是编译器强制要我们做的事情，因此如果<strong>我们不提供构造和析构，编译器会提供</strong></p><p><strong>编译器提供的构造函数和析构函数是空实现。</strong></p><ul><li>构造函数：主要作用在于<strong>创建对象时为对象的成员属性赋值</strong>，构造函数由编译器自动调用，无须手动调用。</li><li>析构函数：主要作用在于对象<strong>销毁前</strong>系统自动调用，执行一些清理工作。</li></ul><p><strong>构造函数语法：</strong><code>类名()&#123;&#125;</code></p><ol><li>构造函数，没有返回值也不写void</li><li>函数名称与类名相同</li><li>构造函数可以有参数，因此可以发生重载</li><li>程序在调用对象时候会自动调用构造，无须手动调用,而且只会调用一次</li></ol><p><strong>析构函数语法：</strong> <code>~类名()&#123;&#125;</code></p><ol><li>析构函数，没有返回值也不写void</li><li>函数名称与类名相同,在名称前加上符号 ~</li><li>析构函数不可以有参数，因此不可以发生重载</li><li>程序在对象销毁前会自动调用析构，无须手动调用,而且只会调用一次</li></ol><h4 id="构造函数的分类及调用"><a href="#构造函数的分类及调用" class="headerlink" title="构造函数的分类及调用"></a>构造函数的分类及调用</h4><p>两种分类方式：</p><p>​ 按参数分为： 有参构造和无参构造</p><p>​ 按类型分为： 普通构造和拷贝构造</p><pre><code class="c++">class Man
+</code></pre><h3 id="函数重载"><a class="anchor" href="#函数重载">#</a> 函数重载</h3><h4 id="函数重载概述"><a class="anchor" href="#函数重载概述">#</a> 函数重载概述</h4><p>** 作用：** 函数名可以相同，提高复用性</p><p><strong>函数重载满足条件：</strong></p><ul><li>同一个作用域下</li><li>函数名称相同</li><li>函数参数<strong>类型不同</strong> 或者 <strong>个数不同</strong> 或者 <strong>顺序不同</strong></li></ul><p><strong>注意:</strong> 函数的返回值不可以作为函数重载的条件</p><h4 id="函数重载注意事项"><a class="anchor" href="#函数重载注意事项">#</a> 函数重载注意事项</h4><ul><li>引用作为重载条件</li><li>函数重载碰到函数默认参数</li></ul><h2 id="类和对象"><a class="anchor" href="#类和对象">#</a> 类和对象</h2><p>C++ 面向对象的三大特性为：<mark>封装、继承、多态</mark></p><p>C++ 认为<mark>万事万物都皆为对象</mark>，对象上有其属性和行为</p><h3 id="封装"><a class="anchor" href="#封装">#</a> 封装</h3><h4 id="封装的意义"><a class="anchor" href="#封装的意义">#</a> 封装的意义</h4><p>封装是 C++ 面向对象三大特性之一</p><p>封装的意义：</p><ul><li>将属性和行为作为一个整体，表现生活中的事物</li><li>将属性和行为加以权限控制</li></ul><p><strong>封装意义一：</strong></p><p>​	在设计类的时候，属性和行为写在一起，表现事物</p><p><strong>语法：</strong> <code>class 类名&#123; 访问权限： 属性 / 行为 &#125;;</code></p><p><strong>封装意义二：</strong></p><p>类在设计时，可以把属性和行为放在不同的权限下，加以控制</p><p>访问权限有三种：</p><ol><li>public 公共权限<ul><li>类内可以访问 类外可以访问</li></ul></li><li>protected 保护权限<ul><li>类内可以访问 类外不可以访问 子类可以访问</li></ul></li><li>private 私有权限<ul><li>类内可以访问 类外不可以访问 子类不可访问</li></ul></li></ol><h4 id="struct和class区别"><a class="anchor" href="#struct和class区别">#</a> struct 和 class 区别</h4><p>在 C++ 中 struct 和 class 唯一的<strong>区别</strong>就在于 <strong>默认的访问权限不同</strong></p><p>区别：</p><ul><li>struct 默认权限为公共</li><li>class 默认权限为私有</li></ul><h4 id="成员属性设置为私有"><a class="anchor" href="#成员属性设置为私有">#</a> 成员属性设置为私有</h4><p>** 优点 1：** 将所有成员属性设置为私有，可以自己控制读写权限</p><p>** 优点 2：** 对于写权限，我们可以检测数据的有效性</p><h3 id="对象的初始化和清理"><a class="anchor" href="#对象的初始化和清理">#</a> 对象的初始化和清理</h3><ul><li>生活中我们买的电子产品都基本会有出厂设置，在某一天我们不用时候也会删除一些自己信息数据保证安全</li><li>C++ 中的面向对象来源于生活，每个对象也都会有初始设置以及 对象销毁前的清理数据的设置。</li></ul><h4 id="构造函数和析构函数"><a class="anchor" href="#构造函数和析构函数">#</a> 构造函数和析构函数</h4><p>对象的<strong>初始化和清理</strong>也是两个非常重要的安全问题</p><p>​	一个对象或者变量没有初始状态，对其使用后果是未知</p><p>​	同样的使用完一个对象或变量，没有及时清理，也会造成一定的安全问题</p><p>c++ 利用了<strong>构造函数</strong>和<strong>析构函数</strong>解决上述问题，这两个函数将会被编译器自动调用，完成对象初始化和清理工作。</p><p>对象的初始化和清理工作是编译器强制要我们做的事情，因此如果<strong>我们不提供构造和析构，编译器会提供</strong></p><p><strong>编译器提供的构造函数和析构函数是空实现。</strong></p><ul><li>构造函数：主要作用在于<strong>创建对象时为对象的成员属性赋值</strong>，构造函数由编译器自动调用，无须手动调用。</li><li>析构函数：主要作用在于对象<strong>销毁前</strong>系统自动调用，执行一些清理工作。</li></ul><p><strong>构造函数语法：</strong> <code>类名()&#123;&#125;</code></p><ol><li>构造函数，没有返回值也不写 void</li><li>函数名称与类名相同</li><li>构造函数可以有参数，因此可以发生重载</li><li>程序在调用对象时候会自动调用构造，无须手动调用，而且只会调用一次</li></ol><p><strong>析构函数语法：</strong> <code>~类名()&#123;&#125;</code></p><ol><li>析构函数，没有返回值也不写 void</li><li>函数名称与类名相同，在名称前加上符号～</li><li>析构函数不可以有参数，因此不可以发生重载</li><li>程序在对象销毁前会自动调用析构，无须手动调用，而且只会调用一次</li></ol><h4 id="构造函数的分类及调用"><a class="anchor" href="#构造函数的分类及调用">#</a> 构造函数的分类及调用</h4><p>两种分类方式：</p><p>​	按参数分为： 有参构造和无参构造</p><p>​	按类型分为： 普通构造和拷贝构造</p><pre><code class="language-c++">class Man
 &#123;
 public:
     //无参构造
-    Man() &#123;
-        name = &quot;&quot;;
-        age = 0;
-        cout &lt;&lt; &quot;构造qwqq&quot; &lt;&lt; endl;
-    &#125;
+	Man() &#123;
+		name = &quot;&quot;;
+		age = 0;
+		cout &lt;&lt; &quot;构造qwqq&quot; &lt;&lt; endl;
+	&#125;
     //含参构造
-    Man(string name, int age) &#123;
-        this-&gt;name = name;
-        this-&gt;age = age;
-    &#125;
+	Man(string name, int age) &#123;
+		this-&gt;name = name;
+		this-&gt;age = age;
+	&#125;
     //拷贝构造,参数固定写法
-    Man(const Man &amp;m) &#123;
-        age = m.age;
-    &#125;
-    ~Man() &#123;
-        cout &lt;&lt; &quot;析构qwqq&quot; &lt;&lt; endl;
-    &#125;
+	Man(const Man &amp;m) &#123;
+		age = m.age;
+	&#125;
+	~Man() &#123;
+		cout &lt;&lt; &quot;析构qwqq&quot; &lt;&lt; endl;
+	&#125;
 private:
-    string name;
-    int age;
+	string name;
+	int age;
 &#125;;
-</code></pre><p>三种调用方式：</p><ol><li><p>括号法</p></li><li><p>显示法</p></li><li><p>隐式转换法</p></li></ol><pre><code class="c++">void main()&#123;
+</code></pre><p>三种调用方式：</p><ol><li><p>括号法</p></li><li><p>显示法</p></li><li><p>隐式转换法</p></li></ol><pre><code class="language-c++">void main()&#123;
     //括号法
     Man m1;//默认构造函数,不需要加(),加了会被编译器会以为是一个函数的声明
     Man m2(&quot;张三&quot;, 18);//含参构造函数调用
@@ -83,687 +83,689 @@ private:
     Man m2 = m1;//拷贝构造
     
 &#125;
-</code></pre><h4 id="拷贝构造函数调用时机"><a href="#拷贝构造函数调用时机" class="headerlink" title="拷贝构造函数调用时机"></a>拷贝构造函数调用时机</h4><p>C++中拷贝构造函数调用时机通常有三种情况</p><ul><li>使用一个已经创建完毕的对象来初始化一个新对象</li><li>值传递的方式给函数参数传值</li><li>以值方式返回局部对象</li></ul><pre><code class="C++">class Person &#123;
+</code></pre><h4 id="拷贝构造函数调用时机"><a class="anchor" href="#拷贝构造函数调用时机">#</a> 拷贝构造函数调用时机</h4><p>C++ 中拷贝构造函数调用时机通常有三种情况</p><ul><li>使用一个已经创建完毕的对象来初始化一个新对象</li><li>值传递的方式给函数参数传值</li><li>以值方式返回局部对象</li></ul><pre><code class="language-C++">class Person &#123;
 public:
-    Person() &#123;
-        cout &lt;&lt; &quot;无参构造函数!&quot; &lt;&lt; endl;
-        mAge = 0;
-    &#125;
-    Person(int age) &#123;
-        cout &lt;&lt; &quot;有参构造函数!&quot; &lt;&lt; endl;
-        mAge = age;
-    &#125;
-    Person(const Person&amp; p) &#123;
-        cout &lt;&lt; &quot;拷贝构造函数!&quot; &lt;&lt; endl;
-        mAge = p.mAge;
-    &#125;
-    //析构函数在释放内存之前调用
-    ~Person() &#123;
-        cout &lt;&lt; &quot;析构函数!&quot; &lt;&lt; endl;
-    &#125;
+	Person() &#123;
+		cout &lt;&lt; &quot;无参构造函数!&quot; &lt;&lt; endl;
+		mAge = 0;
+	&#125;
+	Person(int age) &#123;
+		cout &lt;&lt; &quot;有参构造函数!&quot; &lt;&lt; endl;
+		mAge = age;
+	&#125;
+	Person(const Person&amp; p) &#123;
+		cout &lt;&lt; &quot;拷贝构造函数!&quot; &lt;&lt; endl;
+		mAge = p.mAge;
+	&#125;
+	//析构函数在释放内存之前调用
+	~Person() &#123;
+		cout &lt;&lt; &quot;析构函数!&quot; &lt;&lt; endl;
+	&#125;
 public:
-    int mAge;
+	int mAge;
 &#125;;
 
 //1. 使用一个已经创建完毕的对象来初始化一个新对象
 void test01() &#123;
 
-    Person man(100); //p对象已经创建完毕
-    Person newman(man); //调用拷贝构造函数
-    Person newman2 = man; //拷贝构造
+	Person man(100); //p对象已经创建完毕
+	Person newman(man); //调用拷贝构造函数
+	Person newman2 = man; //拷贝构造
 
-    //Person newman3;
-    //newman3 = man; //不是调用拷贝构造函数，赋值操作
+	//Person newman3;
+	//newman3 = man; //不是调用拷贝构造函数，赋值操作
 &#125;
 
 //2. 值传递的方式给函数参数传值
 //相当于Person p1 = p;
 void doWork(Person p1) &#123;&#125;
 void test02() &#123;
-    Person p; //无参构造函数
-    doWork(p);
+	Person p; //无参构造函数
+	doWork(p);
 &#125;
 
 //3. 以值方式返回局部对象
 Person doWork2()
 &#123;
-    Person p1;
-    cout &lt;&lt; (int *)&amp;p1 &lt;&lt; endl;
-    return p1;
+	Person p1;
+	cout &lt;&lt; (int *)&amp;p1 &lt;&lt; endl;
+	return p1;
 &#125;
 
 void test03()
 &#123;
-    Person p = doWork2();
-    cout &lt;&lt; (int *)&amp;p &lt;&lt; endl;
+	Person p = doWork2();
+	cout &lt;&lt; (int *)&amp;p &lt;&lt; endl;
 &#125;
 
 
 int main() &#123;
 
-    //test01();
-    //test02();
-    test03();
+	//test01();
+	//test02();
+	test03();
 
-    system(&quot;pause&quot;);
+	system(&quot;pause&quot;);
 
-    return 0;
+	return 0;
 &#125;
-</code></pre><h4 id="构造函数调用规则"><a href="#构造函数调用规则" class="headerlink" title="构造函数调用规则"></a>构造函数调用规则</h4><p>默认情况下，c++编译器至少给一个类添加3个函数</p><p>1．默认构造函数(无参，函数体为空)</p><p>2．默认析构函数(无参，函数体为空)</p><p>3．默认拷贝构造函数，对属性进行值拷贝</p><p>构造函数调用规则如下：</p><ul><li>如果用户定义有参构造函数，c++<strong>不在提供默认无参构造，但是会提供默认拷贝构造</strong></li></ul><ul><li>如果用户定义拷贝构造函数，c++<strong>不会再提供其他构造函数</strong></li></ul><h4 id="深拷贝与浅拷贝"><a href="#深拷贝与浅拷贝" class="headerlink" title="深拷贝与浅拷贝"></a>深拷贝与浅拷贝</h4><p>深浅拷贝是面试经典问题，也是常见的一个坑</p><p>浅拷贝：简单的赋值拷贝操作</p><p>深拷贝：在堆区重新申请空间，进行拷贝操作</p><pre><code class="c++">class Person &#123;
+</code></pre><h4 id="构造函数调用规则"><a class="anchor" href="#构造函数调用规则">#</a> 构造函数调用规则</h4><p>默认情况下，c++ 编译器至少给一个类添加 3 个函数</p><p>1．默认构造函数 (无参，函数体为空)</p><p>2．默认析构函数 (无参，函数体为空)</p><p>3．默认拷贝构造函数，对属性进行值拷贝</p><p>构造函数调用规则如下：</p><ul><li><p>如果用户定义有参构造函数，c++<strong> 不在提供默认无参构造，但是会提供默认拷贝构造</strong></p></li><li><p>如果用户定义拷贝构造函数，c++<strong> 不会再提供其他构造函数</strong></p></li></ul><h4 id="深拷贝与浅拷贝"><a class="anchor" href="#深拷贝与浅拷贝">#</a> 深拷贝与浅拷贝</h4><p>深浅拷贝是面试经典问题，也是常见的一个坑</p><p>浅拷贝：简单的赋值拷贝操作</p><p>深拷贝：在堆区重新申请空间，进行拷贝操作</p><pre><code class="language-c++">class Person &#123;
 public:
-    //无参（默认）构造函数
-    Person() &#123;
-        cout &lt;&lt; &quot;无参构造函数!&quot; &lt;&lt; endl;
-    &#125;
-    //有参构造函数
-    Person(int age ,int height) &#123;
-        
-        cout &lt;&lt; &quot;有参构造函数!&quot; &lt;&lt; endl;
+	//无参（默认）构造函数
+	Person() &#123;
+		cout &lt;&lt; &quot;无参构造函数!&quot; &lt;&lt; endl;
+	&#125;
+	//有参构造函数
+	Person(int age ,int height) &#123;
+		
+		cout &lt;&lt; &quot;有参构造函数!&quot; &lt;&lt; endl;
 
-        m_age = age;
-        m_height = new int(height);
-        
-    &#125;
-    //拷贝构造函数  
-    Person(const Person&amp; p) &#123;
-        cout &lt;&lt; &quot;拷贝构造函数!&quot; &lt;&lt; endl;
+		m_age = age;
+		m_height = new int(height);
+		
+	&#125;
+	//拷贝构造函数  
+	Person(const Person&amp; p) &#123;
+		cout &lt;&lt; &quot;拷贝构造函数!&quot; &lt;&lt; endl;
         //浅拷贝会直接将指针的值赋值给另一个对象而不是新开辟一个空间
-        //如果不利用深拷贝在堆区创建新内存，会导致浅拷贝带来的重复释放堆区问题
-        m_age = p.m_age;
-        m_height = new int(*p.m_height);
-        
-    &#125;
+		//如果不利用深拷贝在堆区创建新内存，会导致浅拷贝带来的重复释放堆区问题
+		m_age = p.m_age;
+		m_height = new int(*p.m_height);
+		
+	&#125;
 
-    //析构函数
-    ~Person() &#123;
-        cout &lt;&lt; &quot;析构函数!&quot; &lt;&lt; endl;
+	//析构函数
+	~Person() &#123;
+		cout &lt;&lt; &quot;析构函数!&quot; &lt;&lt; endl;
         //析构代码,将堆区开辟的数据做释放操作
-        if (m_height != NULL)
-        &#123;
-            delete m_height;
-        &#125;
-    &#125;
+		if (m_height != NULL)
+		&#123;
+			delete m_height;
+		&#125;
+	&#125;
 public:
-    int m_age;
-    int* m_height;
+	int m_age;
+	int* m_height;
 &#125;;
 int main()
 &#123;
-    Person p1(18, 180);
-    Person p2(p1);
-    cout &lt;&lt; &quot;p1的年龄： &quot; &lt;&lt; p1.m_age &lt;&lt; &quot; 身高： &quot; &lt;&lt; *p1.m_height &lt;&lt; endl;
-    cout &lt;&lt; &quot;p2的年龄： &quot; &lt;&lt; p2.m_age &lt;&lt; &quot; 身高： &quot; &lt;&lt; *p2.m_height &lt;&lt; endl;
+	Person p1(18, 180);
+	Person p2(p1);
+	cout &lt;&lt; &quot;p1的年龄： &quot; &lt;&lt; p1.m_age &lt;&lt; &quot; 身高： &quot; &lt;&lt; *p1.m_height &lt;&lt; endl;
+	cout &lt;&lt; &quot;p2的年龄： &quot; &lt;&lt; p2.m_age &lt;&lt; &quot; 身高： &quot; &lt;&lt; *p2.m_height &lt;&lt; endl;
 
-    return 0;
+	return 0;
 &#125;
-</code></pre><blockquote><p>总结：如果属性有在堆区开辟的，一定要自己提供拷贝构造函数，防止浅拷贝带来的问题</p></blockquote><h4 id="初始化列表"><a href="#初始化列表" class="headerlink" title="初始化列表"></a>初始化列表</h4><p><strong>作用：</strong></p><p>C++提供了初始化列表语法，用来初始化属性</p><p><strong>语法：</strong><code>构造函数()：属性1(值1),属性2（值2）... &#123;&#125;</code></p><pre><code class="c++">class Person &#123;
+
+</code></pre><blockquote><p>总结：如果属性有在堆区开辟的，一定要自己提供拷贝构造函数，防止浅拷贝带来的问题</p></blockquote><h4 id="初始化列表"><a class="anchor" href="#初始化列表">#</a> 初始化列表</h4><p><strong>作用：</strong></p><p>C++ 提供了初始化列表语法，用来初始化属性</p><p><strong>语法：</strong> <code>构造函数()：属性1(值1),属性2（值2）... &#123;&#125;</code></p><pre><code class="language-c++">class Person &#123;
 public:
-    ////传统方式初始化
-    //Person(int a, int b, int c) &#123;
-    //    m_A = a;
-    //    m_B = b;
-    //    m_C = c;
-    //&#125;
+	////传统方式初始化
+	//Person(int a, int b, int c) &#123;
+	//	m_A = a;
+	//	m_B = b;
+	//	m_C = c;
+	//&#125;
     
-    //初始化列表方式初始化
-    Person(int a, int b, int c) :m_A(a), m_B(b), m_C(c) &#123;&#125;
-    void PrintPerson() &#123;
-        cout &lt;&lt; &quot;mA:&quot; &lt;&lt; m_A &lt;&lt; endl;
-        cout &lt;&lt; &quot;mB:&quot; &lt;&lt; m_B &lt;&lt; endl;
-        cout &lt;&lt; &quot;mC:&quot; &lt;&lt; m_C &lt;&lt; endl;
-    &#125;
+	//初始化列表方式初始化
+	Person(int a, int b, int c) :m_A(a), m_B(b), m_C(c) &#123;&#125;
+	void PrintPerson() &#123;
+		cout &lt;&lt; &quot;mA:&quot; &lt;&lt; m_A &lt;&lt; endl;
+		cout &lt;&lt; &quot;mB:&quot; &lt;&lt; m_B &lt;&lt; endl;
+		cout &lt;&lt; &quot;mC:&quot; &lt;&lt; m_C &lt;&lt; endl;
+	&#125;
 private:
-    int m_A;
-    int m_B;
-    int m_C;
+	int m_A;
+	int m_B;
+	int m_C;
 &#125;;
 int main() &#123;
-    Person p(1, 2, 3);
-    p.PrintPerson();
+	Person p(1, 2, 3);
+	p.PrintPerson();
 
-    return 0;
+	return 0;
 &#125;
-</code></pre><h4 id="类对象作为类成员"><a href="#类对象作为类成员" class="headerlink" title="类对象作为类成员"></a>类对象作为类成员</h4><p>C++类中的成员可以是另一个类的对象，我们称该成员为 对象成员</p><pre><code class="c++">class A &#123;&#125;
+</code></pre><h4 id="类对象作为类成员"><a class="anchor" href="#类对象作为类成员">#</a> 类对象作为类成员</h4><p>C++ 类中的成员可以是另一个类的对象，我们称该成员为 对象成员</p><pre><code class="language-c++">class A &#123;&#125;
 class B &#123;
     A a;
 &#125;
-</code></pre><p>B类中有对象A作为成员，A为对象成员</p><p>那么当创建B对象时，A与B的构造和析构的顺序是谁先谁后？</p><ol start="2"><li>构造的顺序是 ：先调用<strong>对象成员的构造</strong>，再调用本类构造</li><li>析构顺序与构造相反 : 先析构自身,再析构对象成员</li></ol><h4 id="静态成员"><a href="#静态成员" class="headerlink" title="静态成员"></a>静态成员</h4><p>静态成员就是在成员变量和成员函数前加上关键字static，称为静态成员</p><p>静态成员分为：</p><ul><li>静态成员变量<ul><li>所有对象<strong>共享同一份数据</strong></li><li>在编译阶段分配内存</li><li>类内声明，类外初始化</li></ul></li><li>静态成员函数<ul><li>所有对象共享<strong>同一个函数</strong></li><li><strong>静态成员函数</strong>只能访问<strong>静态成员变量</strong></li></ul></li></ul><h3 id="C-对象模型和this指针"><a href="#C-对象模型和this指针" class="headerlink" title="C++对象模型和this指针"></a>C++对象模型和this指针</h3><h4 id="成员变量和成员函数分开存储"><a href="#成员变量和成员函数分开存储" class="headerlink" title="成员变量和成员函数分开存储"></a>成员变量和成员函数分开存储</h4><p>在C++中，类内的成员变量和成员函数分开存储</p><p>只有非静态成员变量才属于类的对象上</p><pre><code class="c++">class Person &#123;
+</code></pre><p>B 类中有对象 A 作为成员，A 为对象成员</p><p>那么当创建 B 对象时，A 与 B 的构造和析构的顺序是谁先谁后？</p><ol start="2"><li>构造的顺序是 ：先调用<strong>对象成员的构造</strong>，再调用本类构造</li><li>析构顺序与构造相反：先析构自身，再析构对象成员</li></ol><h4 id="静态成员"><a class="anchor" href="#静态成员">#</a> 静态成员</h4><p>静态成员就是在成员变量和成员函数前加上关键字 static，称为静态成员</p><p>静态成员分为：</p><ul><li>静态成员变量<ul><li>所有对象<strong>共享同一份数据</strong></li><li>在编译阶段分配内存</li><li>类内声明，类外初始化</li></ul></li><li>静态成员函数<ul><li>所有对象共享<strong>同一个函数</strong></li><li><strong>静态成员函数</strong>只能访问<strong>静态成员变量</strong></li></ul></li></ul><h3 id="c对象模型和this指针"><a class="anchor" href="#c对象模型和this指针">#</a> C++ 对象模型和 this 指针</h3><h4 id="成员变量和成员函数分开存储"><a class="anchor" href="#成员变量和成员函数分开存储">#</a> 成员变量和成员函数分开存储</h4><p>在 C++ 中，类内的成员变量和成员函数分开存储</p><p>只有非静态成员变量才属于类的对象上</p><pre><code class="language-c++">class Person &#123;
 public:
-    Person() &#123;
-        mA = 0;
-    &#125;
-    //非静态成员变量占对象空间
-    int mA;
-    //静态成员变量不占对象空间
-    static int mB; 
-    //函数也不占对象空间，所有函数共享一个函数实例
-    void func() &#123;
-        cout &lt;&lt; &quot;mA:&quot; &lt;&lt; this-&gt;mA &lt;&lt; endl;
-    &#125;
-    //静态成员函数也不占对象空间
-    static void sfunc() &#123;
-    &#125;
+	Person() &#123;
+		mA = 0;
+	&#125;
+	//非静态成员变量占对象空间
+	int mA;
+	//静态成员变量不占对象空间
+	static int mB; 
+	//函数也不占对象空间，所有函数共享一个函数实例
+	void func() &#123;
+		cout &lt;&lt; &quot;mA:&quot; &lt;&lt; this-&gt;mA &lt;&lt; endl;
+	&#125;
+	//静态成员函数也不占对象空间
+	static void sfunc() &#123;
+	&#125;
 &#125;;
 int main() &#123;
-    cout &lt;&lt; sizeof(Person) &lt;&lt; endl;
+	cout &lt;&lt; sizeof(Person) &lt;&lt; endl;
     
-    return 0;
+	return 0;
 &#125;
-</code></pre><h4 id="this指针概念"><a href="#this指针概念" class="headerlink" title="this指针概念"></a>this指针概念</h4><p>通过4.3.1我们知道在C++中成员变量和成员函数是分开存储的</p><p>每一个非静态成员函数只会诞生一份函数实例，也就是说多个同类型的对象会共用一块代码</p><p>那么问题是：这一块代码是如何区分那个对象调用自己的呢？</p><p>c++通过提供特殊的对象指针，this指针，解决上述问题。<strong>this指针指向被调用的成员函数所属的对象</strong></p><p>this指针是隐含每一个非静态成员函数内的一种指针</p><p>this指针不需要定义，直接使用即可</p><p>this指针的用途：</p><ul><li>当形参和成员变量同名时，可用this指针来区分</li><li>在类的非静态成员函数中返回对象本身，可使用return *this</li></ul><h4 id="空指针访问成员函数"><a href="#空指针访问成员函数" class="headerlink" title="空指针访问成员函数"></a>空指针访问成员函数</h4><p>C++中空指针也是可以调用成员函数的，但是也要注意有没有用到this指针</p><p>如果用到this指针，需要加以判断保证代码的健壮性</p><h4 id="const修饰成员函数"><a href="#const修饰成员函数" class="headerlink" title="const修饰成员函数"></a>const修饰成员函数</h4><p><strong>常函数：</strong></p><ul><li>成员函数后加const后我们称为这个函数为<strong>常函数</strong></li><li>常函数内不可以修改成员属性</li><li>成员属性声明时加关键字mutable后，在常函数中依然可以修改</li></ul><p><strong>常对象：</strong></p><ul><li>声明对象前加const称该对象为常对象</li><li>常对象只能调用常函数</li></ul><h3 id="友元"><a href="#友元" class="headerlink" title="友元"></a>友元</h3><p>生活中你的家有客厅(Public)，有你的卧室(Private)</p><p>客厅所有来的客人都可以进去，但是你的卧室是私有的，也就是说只有你能进去</p><p>但是呢，你也可以允许你的好闺蜜好基友进去。</p><p>在程序里，有些私有属性 也想让类外特殊的一些函数或者类进行访问，就需要用到友元的技术</p><p>友元的目的就是让一个函数或者类 访问另一个类中私有成员</p><p>友元的关键字为 ==friend==</p><p>友元的三种实现</p><ul><li>全局函数做友元</li><li>类做友元</li><li>成员函数做友元</li></ul><h4 id="全局函数做友元"><a href="#全局函数做友元" class="headerlink" title="全局函数做友元"></a>全局函数做友元</h4><pre><code class="c++">class Building
+</code></pre><h4 id="this指针概念"><a class="anchor" href="#this指针概念">#</a> this 指针概念</h4><p>通过 4.3.1 我们知道在 C++ 中成员变量和成员函数是分开存储的</p><p>每一个非静态成员函数只会诞生一份函数实例，也就是说多个同类型的对象会共用一块代码</p><p>那么问题是：这一块代码是如何区分那个对象调用自己的呢？</p><p>c++ 通过提供特殊的对象指针，this 指针，解决上述问题。<strong>this 指针指向被调用的成员函数所属的对象</strong></p><p>this 指针是隐含每一个非静态成员函数内的一种指针</p><p>this 指针不需要定义，直接使用即可</p><p>this 指针的用途：</p><ul><li>当形参和成员变量同名时，可用 this 指针来区分</li><li>在类的非静态成员函数中返回对象本身，可使用 return *this</li></ul><h4 id="空指针访问成员函数"><a class="anchor" href="#空指针访问成员函数">#</a> 空指针访问成员函数</h4><p>C++ 中空指针也是可以调用成员函数的，但是也要注意有没有用到 this 指针</p><p>如果用到 this 指针，需要加以判断保证代码的健壮性</p><h4 id="const修饰成员函数"><a class="anchor" href="#const修饰成员函数">#</a> const 修饰成员函数</h4><p><strong>常函数：</strong></p><ul><li>成员函数后加 const 后我们称为这个函数为<strong>常函数</strong></li><li>常函数内不可以修改成员属性</li><li>成员属性声明时加关键字 mutable 后，在常函数中依然可以修改</li></ul><p><strong>常对象：</strong></p><ul><li>声明对象前加 const 称该对象为常对象</li><li>常对象只能调用常函数</li></ul><h3 id="友元"><a class="anchor" href="#友元">#</a> 友元</h3><p>生活中你的家有客厅 (Public)，有你的卧室 (Private)</p><p>客厅所有来的客人都可以进去，但是你的卧室是私有的，也就是说只有你能进去</p><p>但是呢，你也可以允许你的好闺蜜好基友进去。</p><p>在程序里，有些私有属性 也想让类外特殊的一些函数或者类进行访问，就需要用到友元的技术</p><p>友元的目的就是让一个函数或者类 访问另一个类中私有成员</p><p>友元的关键字为 <mark>friend</mark></p><p>友元的三种实现</p><ul><li>全局函数做友元</li><li>类做友元</li><li>成员函数做友元</li></ul><h4 id="全局函数做友元"><a class="anchor" href="#全局函数做友元">#</a> 全局函数做友元</h4><pre><code class="language-c++">class Building
 &#123;
-    friend void GoodGay(Building* building);//友元函数的声明
+	friend void GoodGay(Building* building);//友元函数的声明
 public:
-    string SittingRoom;
+	string SittingRoom;
 
-    Building() &#123;
-        SittingRoom = &quot;客厅&quot;;
-        BedRoom = &quot;卧室&quot;;
-    &#125;
+	Building() &#123;
+		SittingRoom = &quot;客厅&quot;;
+		BedRoom = &quot;卧室&quot;;
+	&#125;
 private:
-    string BedRoom;
+	string BedRoom;
 &#125;;
 void GoodGay(Building* building)
 &#123;
-    cout &lt;&lt; &quot;好基友全局函数正在访问: &quot; &lt;&lt; building-&gt;SittingRoom &lt;&lt; endl;
-    cout&lt;&lt;&quot;好基友全局函数正在访问: &quot; &lt;&lt; building-&gt;BedRoom &lt;&lt; endl;//上面不进行声明则这句代码报错
+	cout &lt;&lt; &quot;好基友全局函数正在访问: &quot; &lt;&lt; building-&gt;SittingRoom &lt;&lt; endl;
+	cout&lt;&lt;&quot;好基友全局函数正在访问: &quot; &lt;&lt; building-&gt;BedRoom &lt;&lt; endl;//上面不进行声明则这句代码报错
 &#125;
 int main()
 &#123;
-    Building building;
-    GoodGay(&amp;building);
-    return 0;
+	Building building;
+	GoodGay(&amp;building);
+	return 0;
 &#125;
-</code></pre><h4 id="类做友元"><a href="#类做友元" class="headerlink" title="类做友元"></a>类做友元</h4><pre><code class="c++">class Building
+</code></pre><h4 id="类做友元"><a class="anchor" href="#类做友元">#</a> 类做友元</h4><pre><code class="language-c++">class Building
 &#123;
-    friend class GoodGay;//友元类的声明
+	friend class GoodGay;//友元类的声明
 public:
-    string SittingRoom;
+	string SittingRoom;
 
-    Building() &#123;
-        SittingRoom = &quot;客厅&quot;;
-        BedRoom = &quot;卧室&quot;;
-    &#125;
+	Building() &#123;
+		SittingRoom = &quot;客厅&quot;;
+		BedRoom = &quot;卧室&quot;;
+	&#125;
 private:
-    string BedRoom;
+	string BedRoom;
 &#125;;
 class GoodGay
 &#123;
 public:
-    Building* building;
-    GoodGay() &#123;
-        building = new Building;
-    &#125;
-    void visit() &#123;
-        cout &lt;&lt; &quot;好基友类正在访问: &quot; &lt;&lt; building-&gt;SittingRoom &lt;&lt; endl;
-        cout &lt;&lt; &quot;好基友类正在访问: &quot; &lt;&lt; building-&gt;BedRoom &lt;&lt; endl;
-    &#125;
+	Building* building;
+	GoodGay() &#123;
+		building = new Building;
+	&#125;
+	void visit() &#123;
+		cout &lt;&lt; &quot;好基友类正在访问: &quot; &lt;&lt; building-&gt;SittingRoom &lt;&lt; endl;
+		cout &lt;&lt; &quot;好基友类正在访问: &quot; &lt;&lt; building-&gt;BedRoom &lt;&lt; endl;
+	&#125;
 &#125;;
 int main()
 &#123;
-    GoodGay Gay;
-    Gay.visit();
-    return 0;
+	GoodGay Gay;
+	Gay.visit();
+	return 0;
 &#125;
-</code></pre><h4 id="成员函数做友元"><a href="#成员函数做友元" class="headerlink" title="成员函数做友元"></a>成员函数做友元</h4><pre><code class="c++">class Building;
+</code></pre><h4 id="成员函数做友元"><a class="anchor" href="#成员函数做友元">#</a> 成员函数做友元</h4><pre><code class="language-c++">class Building;
 class GoodGay
 &#123;
 public:
-    Building* building;
-    GoodGay();
-    void visit();
-    void visit2();
+	Building* building;
+	GoodGay();
+	void visit();
+	void visit2();
 &#125;;
 class Building
 &#123;
-       friend void GoodGay::visit();
+   	friend void GoodGay::visit();
 public:
-    string SittingRoom;
-    Building();
+	string SittingRoom;
+	Building();
 private:
-    string BedRoom;
+	string BedRoom;
 &#125;;
 GoodGay::GoodGay() &#123;
-    building = new Building;
+	building = new Building;
 &#125;
 void GoodGay::visit() &#123;
-    cout &lt;&lt; &quot;好基友类的成员函数visit正在访问: &quot; &lt;&lt; building-&gt;SittingRoom &lt;&lt; endl;
-    cout &lt;&lt; &quot;好基友类的成员函数visit正在访问: &quot; &lt;&lt; building-&gt;BedRoom &lt;&lt; endl;
+	cout &lt;&lt; &quot;好基友类的成员函数visit正在访问: &quot; &lt;&lt; building-&gt;SittingRoom &lt;&lt; endl;
+	cout &lt;&lt; &quot;好基友类的成员函数visit正在访问: &quot; &lt;&lt; building-&gt;BedRoom &lt;&lt; endl;
 &#125;
 void GoodGay::visit2() &#123;
-    cout &lt;&lt; &quot;好基友类的成员函数visit2正在访问: &quot; &lt;&lt; building-&gt;SittingRoom &lt;&lt; endl;
+	cout &lt;&lt; &quot;好基友类的成员函数visit2正在访问: &quot; &lt;&lt; building-&gt;SittingRoom &lt;&lt; endl;
 &#125;
 Building::Building() &#123;
-    SittingRoom = &quot;客厅&quot;;
-    BedRoom = &quot;卧室&quot;;
+	SittingRoom = &quot;客厅&quot;;
+	BedRoom = &quot;卧室&quot;;
 &#125;
 int main()
 &#123;
-    GoodGay Gay;
-    Gay.visit();
-    Gay.visit2();
-    return 0;
+	GoodGay Gay;
+	Gay.visit();
+	Gay.visit2();
+	return 0;
 &#125;
-</code></pre><p>这里有一个小坑,就是类的定义和函数实现要全部分开,否则会产生循环依赖而报错qwqq</p><h3 id="运算符重载"><a href="#运算符重载" class="headerlink" title="运算符重载"></a>运算符重载</h3><p>运算符重载概念：对已有的运算符重新进行定义，赋予其另一种功能，以适应不同的数据类型</p><p>核心:使用c++提供的函数名 <code>operator运算符</code>来命名函数即可<strong>简写函数的调用</strong></p><h4 id="加号运算符重载"><a href="#加号运算符重载" class="headerlink" title="加号运算符重载"></a>加号运算符重载</h4><p>作用：实现两个自定义数据类型相加的运算</p><pre><code class="c++">class Complex_number &#123;
+
+</code></pre><p>这里有一个小坑，就是类的定义和函数实现要全部分开，否则会产生循环依赖而报错 qwqq</p><h3 id="运算符重载"><a class="anchor" href="#运算符重载">#</a> 运算符重载</h3><p>运算符重载概念：对已有的运算符重新进行定义，赋予其另一种功能，以适应不同的数据类型</p><p>核心：使用 c++ 提供的函数名 <code>operator运算符</code> 来命名函数即可<strong>简写函数的调用</strong></p><h4 id="加号运算符重载"><a class="anchor" href="#加号运算符重载">#</a> 加号运算符重载</h4><p>作用：实现两个自定义数据类型相加的运算</p><pre><code class="language-c++">class Complex_number &#123;
 public:
-    int real;
-    int imaginary;
-    Complex_number(int a, int b) &#123;
-        real = a;
-        imaginary = b;
-    &#125;
-    void show() &#123;
-        if (imaginary == 1)
-            cout &lt;&lt; real &lt;&lt; &quot;+&quot; &lt;&lt; &quot;i&quot;;
-        else if (imaginary &gt; 0)
-            cout &lt;&lt; real &lt;&lt; &quot;+&quot; &lt;&lt; imaginary &lt;&lt; &quot;i&quot;;
-        else if (imaginary == 0)
-            cout &lt;&lt; real;
-        else if (imaginary == -1)
-            cout &lt;&lt; real &lt;&lt; &quot;-i&quot;;
-        else
-            cout &lt;&lt; real &lt;&lt; imaginary &lt;&lt; &quot;i&quot;;
-    &#125;
-    //成员函数实现 + 号运算符的重载
-    Complex_number operator+(Complex_number &amp;m)//按引用传可以节省空间
-    &#123;
-        Complex_number temp(0,0);
-        temp.real = this-&gt;real + m.real;
-        temp.imaginary = this-&gt;imaginary + m.imaginary;
-        return temp;
-    &#125;
+	int real;
+	int imaginary;
+	Complex_number(int a, int b) &#123;
+		real = a;
+		imaginary = b;
+	&#125;
+	void show() &#123;
+		if (imaginary == 1)
+			cout &lt;&lt; real &lt;&lt; &quot;+&quot; &lt;&lt; &quot;i&quot;;
+		else if (imaginary &gt; 0)
+			cout &lt;&lt; real &lt;&lt; &quot;+&quot; &lt;&lt; imaginary &lt;&lt; &quot;i&quot;;
+		else if (imaginary == 0)
+			cout &lt;&lt; real;
+		else if (imaginary == -1)
+			cout &lt;&lt; real &lt;&lt; &quot;-i&quot;;
+		else
+			cout &lt;&lt; real &lt;&lt; imaginary &lt;&lt; &quot;i&quot;;
+	&#125;
+	//成员函数实现 + 号运算符的重载
+	Complex_number operator+(Complex_number &amp;m)//按引用传可以节省空间
+	&#123;
+		Complex_number temp(0,0);
+		temp.real = this-&gt;real + m.real;
+		temp.imaginary = this-&gt;imaginary + m.imaginary;
+		return temp;
+	&#125;
 &#125;;
 //全局函数实现 + 号运算符重载
 //Complex_number operator+(Complex_number&amp; m1,Complex_number &amp;m2)//按引用传可以节省空间
 //&#123;
-//    Complex_number temp(0,0);
-//    temp.real = m1.real + m2.real;
-//    temp.imaginary = m1.imaginary + m2.imaginary;
-//    return temp;
+//	Complex_number temp(0,0);
+//	temp.real = m1.real + m2.real;
+//	temp.imaginary = m1.imaginary + m2.imaginary;
+//	return temp;
 //&#125;
 Complex_number operator+(Complex_number&amp; m1,int a)//按引用传可以节省空间
 &#123;
-    Complex_number temp(0,0);
-    temp.real = m1.real + a;
-    temp.imaginary = m1.imaginary + a;
-    return temp;
+	Complex_number temp(0,0);
+	temp.real = m1.real + a;
+	temp.imaginary = m1.imaginary + a;
+	return temp;
 &#125;
 int main()
 &#123;
-    Complex_number m1(1, -2);
-    Complex_number m2(3, 1);
-    Complex_number m3 = m1 + m2;
+	Complex_number m1(1, -2);
+	Complex_number m2(3, 1);
+	Complex_number m3 = m1 + m2;
     //相当于Complex_number m3 = m1.operator+(m2);
-    m3.show(); cout &lt;&lt; endl;
-    Complex_number m4 = m3 + 5;
+	m3.show(); cout &lt;&lt; endl;
+	Complex_number m4 = m3 + 5;
     //相当于Complex_number m4 = operator+(m3, 5);
-    m4.show(); cout &lt;&lt; endl;
+	m4.show(); cout &lt;&lt; endl;
 
-    return 0;
+	return 0;
 &#125;
-</code></pre><blockquote><p>总结:</p><ol><li>对于内置数据类型的表达式的运算符是不可能改变的</li><li>不要滥用运算符重载</li></ol></blockquote><h4 id="左移运算符重载"><a href="#左移运算符重载" class="headerlink" title="左移运算符重载"></a>左移运算符重载</h4><p>作用：可以输出自定义数据类型</p><pre><code class="c++">class Complex_number &#123;
-    friend ostream&amp; operator&lt;&lt;(ostream&amp; cout, Complex_number m);//使用友元使全局函数可以访问私有变量qwqq
+</code></pre><blockquote><p>总结:</p><ol><li>对于内置数据类型的表达式的运算符是不可能改变的</li><li>不要滥用运算符重载</li></ol></blockquote><h4 id="左移运算符重载"><a class="anchor" href="#左移运算符重载">#</a> 左移运算符重载</h4><p>作用：可以输出自定义数据类型</p><pre><code class="language-c++">class Complex_number &#123;
+	friend ostream&amp; operator&lt;&lt;(ostream&amp; cout, Complex_number m);//使用友元使全局函数可以访问私有变量qwqq
 private:
-    int real;
-    int imaginary;
+	int real;
+	int imaginary;
 public:
-    Complex_number(int a, int b) &#123;
-        real = a;
-        imaginary = b;
-    &#125;
-    Complex_number operator+(Complex_number &amp;m)
-    &#123;
-        Complex_number temp(0,0);
-        temp.real = this-&gt;real + m.real;
-        temp.imaginary = this-&gt;imaginary + m.imaginary;
-        return temp;
-    &#125;
-    //成员函数 只能实现  p &lt;&lt; cout 不是我们想要的效果
-    //void operator&lt;&lt;(Person&amp; p)&#123;
-    //&#125;
+	Complex_number(int a, int b) &#123;
+		real = a;
+		imaginary = b;
+	&#125;
+	Complex_number operator+(Complex_number &amp;m)
+	&#123;
+		Complex_number temp(0,0);
+		temp.real = this-&gt;real + m.real;
+		temp.imaginary = this-&gt;imaginary + m.imaginary;
+		return temp;
+	&#125;
+	//成员函数 只能实现  p &lt;&lt; cout 不是我们想要的效果
+	//void operator&lt;&lt;(Person&amp; p)&#123;
+	//&#125;
 &#125;;
 ostream&amp; operator&lt;&lt;(ostream&amp; cout, Complex_number m) &#123;
-    //__PURE_APPDOMAIN_GLOBAL extern _CRTDATA2_IMPORT ostream cout;
-    //cout的类型为 ostream ,cout对象全局只能有一个,用传引用的方式传入
-    //直接改写原来Complex_number类中的show()函数
-    if (m.imaginary == 1)
-        cout &lt;&lt; m.real &lt;&lt; &quot;+&quot; &lt;&lt; &quot;i&quot;;
-    else if (m.imaginary &gt; 0)
-        cout &lt;&lt; m.real &lt;&lt; &quot;+&quot; &lt;&lt; m.imaginary &lt;&lt; &quot;i&quot;;
-    else if (m.imaginary == 0)
-        cout &lt;&lt; m.real;
-    else if (m.imaginary == -1)
-        cout &lt;&lt; m.real &lt;&lt; &quot;-i&quot;;
-    else
-        cout &lt;&lt; m.real &lt;&lt; m.imaginary &lt;&lt; &quot;i&quot;;
-    return cout;//返回cout使输出可以使用链式编程qwqq
+	//__PURE_APPDOMAIN_GLOBAL extern _CRTDATA2_IMPORT ostream cout;
+	//cout的类型为 ostream ,cout对象全局只能有一个,用传引用的方式传入
+	//直接改写原来Complex_number类中的show()函数
+	if (m.imaginary == 1)
+		cout &lt;&lt; m.real &lt;&lt; &quot;+&quot; &lt;&lt; &quot;i&quot;;
+	else if (m.imaginary &gt; 0)
+		cout &lt;&lt; m.real &lt;&lt; &quot;+&quot; &lt;&lt; m.imaginary &lt;&lt; &quot;i&quot;;
+	else if (m.imaginary == 0)
+		cout &lt;&lt; m.real;
+	else if (m.imaginary == -1)
+		cout &lt;&lt; m.real &lt;&lt; &quot;-i&quot;;
+	else
+		cout &lt;&lt; m.real &lt;&lt; m.imaginary &lt;&lt; &quot;i&quot;;
+	return cout;//返回cout使输出可以使用链式编程qwqq
 &#125;
 int main()
 &#123;
-    Complex_number m1(1, -2);
-    Complex_number m2(3, 1);
-    Complex_number m3 = m1 + m2;
-    cout &lt;&lt; m3;
+	Complex_number m1(1, -2);
+	Complex_number m2(3, 1);
+	Complex_number m3 = m1 + m2;
+	cout &lt;&lt; m3;
 
 
-    return 0;
+	return 0;
 &#125;
-</code></pre><h4 id="递增运算符重载"><a href="#递增运算符重载" class="headerlink" title="递增运算符重载"></a>递增运算符重载</h4><p>作用： 通过重载递增运算符，实现自己的整型数据</p><pre><code class="c++">class Complex_number &#123;
-    friend ostream&amp; operator&lt;&lt;(ostream&amp; cout, Complex_number m);
+</code></pre><h4 id="递增运算符重载"><a class="anchor" href="#递增运算符重载">#</a> 递增运算符重载</h4><p>作用： 通过重载递增运算符，实现自己的整型数据</p><pre><code class="language-c++">class Complex_number &#123;
+	friend ostream&amp; operator&lt;&lt;(ostream&amp; cout, Complex_number m);
 private:
-    int real;
-    int imaginary;
+	int real;
+	int imaginary;
 public:
-    Complex_number(int a, int b) &#123;
-        real = a;
-        imaginary = b;
-    &#125;
-    Complex_number operator+(Complex_number &amp;m)
-    &#123;
-        Complex_number temp(0,0);
-        temp.real = this-&gt;real + m.real;
-        temp.imaginary = this-&gt;imaginary + m.imaginary;
-        return temp;
-    &#125;
-    //重载前置 ++ 运算符 返回引用是为了一直对一个数据进行递增操作
-    Complex_number&amp; operator++()
-    &#123;
-        //先 +1
-        real++;
-        imaginary++;
-        //再返回
-        return *this;//解引用qwqq
-    &#125;
-    //重载后置 ++ 运算符 返回引用是为了一直对一个数据进行递增操作
-    Complex_number operator++(int)//这里的int是占位参数,用于区分前置后置qwqq
-    &#123;    //后置递增返回的是值,前置递增返回的是引用!!!记住!!!
-        //先记录当前结果
-        Complex_number temp = *this;
-        // +1 操作
-        real++;
-        imaginary++;
-        //再返回
-        return temp;
-    &#125;
+	Complex_number(int a, int b) &#123;
+		real = a;
+		imaginary = b;
+	&#125;
+	Complex_number operator+(Complex_number &amp;m)
+	&#123;
+		Complex_number temp(0,0);
+		temp.real = this-&gt;real + m.real;
+		temp.imaginary = this-&gt;imaginary + m.imaginary;
+		return temp;
+	&#125;
+	//重载前置 ++ 运算符 返回引用是为了一直对一个数据进行递增操作
+	Complex_number&amp; operator++()
+	&#123;
+		//先 +1
+		real++;
+		imaginary++;
+		//再返回
+		return *this;//解引用qwqq
+	&#125;
+	//重载后置 ++ 运算符 返回引用是为了一直对一个数据进行递增操作
+	Complex_number operator++(int)//这里的int是占位参数,用于区分前置后置qwqq
+	&#123;	//后置递增返回的是值,前置递增返回的是引用!!!记住!!!
+		//先记录当前结果
+		Complex_number temp = *this;
+		// +1 操作
+		real++;
+		imaginary++;
+		//再返回
+		return temp;
+	&#125;
 &#125;;
 ostream&amp; operator&lt;&lt;(ostream&amp; cout, Complex_number m) &#123;
-    if (m.imaginary == 1)
-        cout &lt;&lt; m.real &lt;&lt; &quot;+&quot; &lt;&lt; &quot;i&quot;;
-    else if (m.imaginary &gt; 0)
-        cout &lt;&lt; m.real &lt;&lt; &quot;+&quot; &lt;&lt; m.imaginary &lt;&lt; &quot;i&quot;;
-    else if (m.imaginary == 0)
-        cout &lt;&lt; m.real;
-    else if (m.imaginary == -1)
-        cout &lt;&lt; m.real &lt;&lt; &quot;-i&quot;;
-    else
-        cout &lt;&lt; m.real &lt;&lt; m.imaginary &lt;&lt; &quot;i&quot;;
-    return cout;
+	if (m.imaginary == 1)
+		cout &lt;&lt; m.real &lt;&lt; &quot;+&quot; &lt;&lt; &quot;i&quot;;
+	else if (m.imaginary &gt; 0)
+		cout &lt;&lt; m.real &lt;&lt; &quot;+&quot; &lt;&lt; m.imaginary &lt;&lt; &quot;i&quot;;
+	else if (m.imaginary == 0)
+		cout &lt;&lt; m.real;
+	else if (m.imaginary == -1)
+		cout &lt;&lt; m.real &lt;&lt; &quot;-i&quot;;
+	else
+		cout &lt;&lt; m.real &lt;&lt; m.imaginary &lt;&lt; &quot;i&quot;;
+	return cout;
 &#125;
 int main()
 &#123;
-    Complex_number m1(1, -2);
-    Complex_number m2(3, 1);
-    Complex_number m3 = m1 + m2;
-    cout &lt;&lt; m3++ &lt;&lt; endl;
-    cout &lt;&lt; m3 &lt;&lt; endl;
-    cout &lt;&lt; ++m3 &lt;&lt; endl;
+	Complex_number m1(1, -2);
+	Complex_number m2(3, 1);
+	Complex_number m3 = m1 + m2;
+	cout &lt;&lt; m3++ &lt;&lt; endl;
+	cout &lt;&lt; m3 &lt;&lt; endl;
+	cout &lt;&lt; ++m3 &lt;&lt; endl;
 
-    return 0;
+	return 0;
 &#125;
-</code></pre><h4 id="赋值运算符重载"><a href="#赋值运算符重载" class="headerlink" title="赋值运算符重载"></a>赋值运算符重载</h4><p>c++编译器至少给一个类添加<strong>4个函数</strong></p><ol><li>默认构造函数(无参，函数体为空)</li><li>默认析构函数(无参，函数体为空)</li><li>默认拷贝构造函数，对属性进行值拷贝</li><li>赋值运算符 operator=, 对属性进行值拷贝<ul><li>编译器提供的拷贝为<strong>浅拷贝</strong>,需要手动实现深拷贝</li></ul></li></ol><p>如果类中有属性指向堆区，做赋值操作时也会出现<strong>深浅拷贝</strong>问题</p><pre><code class="c++">class Person
+</code></pre><h4 id="赋值运算符重载"><a class="anchor" href="#赋值运算符重载">#</a> 赋值运算符重载</h4><p>c++ 编译器至少给一个类添加<strong> 4 个函数</strong></p><ol><li>默认构造函数 (无参，函数体为空)</li><li>默认析构函数 (无参，函数体为空)</li><li>默认拷贝构造函数，对属性进行值拷贝</li><li>赋值运算符 operator=, 对属性进行值拷贝<ul><li>编译器提供的拷贝为<strong>浅拷贝</strong>，需要手动实现深拷贝</li></ul></li></ol><p>如果类中有属性指向堆区，做赋值操作时也会出现<strong>深浅拷贝</strong>问题</p><pre><code class="language-c++">class Person
 &#123;
 public:
-    Person(int age)
-    &#123;
-        //将年龄数据开辟到堆区
-        m_Age = new int(age);
-    &#125;
-    //重载赋值运算符 
-    Person&amp; operator=(Person &amp;p)
-    &#123;
-        if (m_Age != NULL)
-        &#123;
-            delete m_Age;
-            m_Age = NULL;
-        &#125;
-        //编译器提供的代码是浅拷贝
-        //m_Age = p.m_Age;
-        //提供深拷贝 解决浅拷贝的问题
-        m_Age = new int(*p.m_Age);
-        //返回自身
-        return *this;//实现连等号qwqq
-    &#125;
-    ~Person()
-    &#123;
-        if (m_Age != NULL)
-        &#123;
-            delete m_Age;
-            m_Age = NULL;
-        &#125;
-    &#125;
-    //年龄的指针
-    int *m_Age;
+	Person(int age)
+	&#123;
+		//将年龄数据开辟到堆区
+		m_Age = new int(age);
+	&#125;
+	//重载赋值运算符 
+	Person&amp; operator=(Person &amp;p)
+	&#123;
+		if (m_Age != NULL)
+		&#123;
+			delete m_Age;
+			m_Age = NULL;
+		&#125;
+		//编译器提供的代码是浅拷贝
+		//m_Age = p.m_Age;
+		//提供深拷贝 解决浅拷贝的问题
+		m_Age = new int(*p.m_Age);
+		//返回自身
+		return *this;//实现连等号qwqq
+	&#125;
+	~Person()
+	&#123;
+		if (m_Age != NULL)
+		&#123;
+			delete m_Age;
+			m_Age = NULL;
+		&#125;
+	&#125;
+	//年龄的指针
+	int *m_Age;
 &#125;;
 
 void test01()
 &#123;
-    Person p1(18);
-    Person p2(20);
-    Person p3(30);
-    p3 = p2 = p1; //赋值操作
-    cout &lt;&lt; &quot;p1的年龄为：&quot; &lt;&lt; *p1.m_Age &lt;&lt; endl;
-    cout &lt;&lt; &quot;p2的年龄为：&quot; &lt;&lt; *p2.m_Age &lt;&lt; endl;
-    cout &lt;&lt; &quot;p3的年龄为：&quot; &lt;&lt; *p3.m_Age &lt;&lt; endl;
+	Person p1(18);
+	Person p2(20);
+	Person p3(30);
+	p3 = p2 = p1; //赋值操作
+	cout &lt;&lt; &quot;p1的年龄为：&quot; &lt;&lt; *p1.m_Age &lt;&lt; endl;
+	cout &lt;&lt; &quot;p2的年龄为：&quot; &lt;&lt; *p2.m_Age &lt;&lt; endl;
+	cout &lt;&lt; &quot;p3的年龄为：&quot; &lt;&lt; *p3.m_Age &lt;&lt; endl;
 &#125;
 
 int main() &#123;
-    test01();
-    //int a = 10;
-    //int b = 20;
-    //int c = 30;
-    //c = b = a;
-    //cout &lt;&lt; &quot;a = &quot; &lt;&lt; a &lt;&lt; endl;
-    //cout &lt;&lt; &quot;b = &quot; &lt;&lt; b &lt;&lt; endl;
-    //cout &lt;&lt; &quot;c = &quot; &lt;&lt; c &lt;&lt; endl;
-    system(&quot;pause&quot;);
+	test01();
+	//int a = 10;
+	//int b = 20;
+	//int c = 30;
+	//c = b = a;
+	//cout &lt;&lt; &quot;a = &quot; &lt;&lt; a &lt;&lt; endl;
+	//cout &lt;&lt; &quot;b = &quot; &lt;&lt; b &lt;&lt; endl;
+	//cout &lt;&lt; &quot;c = &quot; &lt;&lt; c &lt;&lt; endl;
+	system(&quot;pause&quot;);
 
-    return 0;
+	return 0;
 &#125;
-</code></pre><h4 id="关系运算符重载"><a href="#关系运算符重载" class="headerlink" title="关系运算符重载"></a>关系运算符重载</h4><p><strong>作用：</strong>重载关系运算符，可以让两个自定义类型对象进行对比操作</p><pre><code class="c++">class Man &#123;
-    string name;
-    int age;
+</code></pre><h4 id="关系运算符重载"><a class="anchor" href="#关系运算符重载">#</a> 关系运算符重载</h4><p>** 作用：** 重载关系运算符，可以让两个自定义类型对象进行对比操作</p><pre><code class="language-c++">class Man &#123;
+	string name;
+	int age;
 public:
-    Man(string name, int age) &#123;
-        this-&gt;name = name;
-        this-&gt;age = age;
-    &#125;
+	Man(string name, int age) &#123;
+		this-&gt;name = name;
+		this-&gt;age = age;
+	&#125;
     //关系运算符的返回值为布尔类型
-    bool operator==(Man&amp; m) &#123;
-        if (this-&gt;age == m.age &amp;&amp; this-&gt;name == m.name)
-            return true;
-        else
-            return false;
-    &#125;
+	bool operator==(Man&amp; m) &#123;
+		if (this-&gt;age == m.age &amp;&amp; this-&gt;name == m.name)
+			return true;
+		else
+			return false;
+	&#125;
 &#125;;
-</code></pre><h4 id="函数调用运算符重载"><a href="#函数调用运算符重载" class="headerlink" title="函数调用运算符重载"></a>函数调用运算符重载</h4><ul><li>函数调用运算符 () 也可以重载</li><li>由于重载后使用的方式非常像函数的调用，因此称为仿函数</li><li>仿函数没有固定写法，非常灵活</li></ul><pre><code class="c++">class Myprint &#123;
+</code></pre><h4 id="函数调用运算符重载"><a class="anchor" href="#函数调用运算符重载">#</a> 函数调用运算符重载</h4><ul><li>函数调用运算符 () 也可以重载</li><li>由于重载后使用的方式非常像函数的调用，因此称为仿函数</li><li>仿函数没有固定写法，非常灵活</li></ul><pre><code class="language-c++">class Myprint &#123;
 public:
-    void operator()(string test) &#123;
-        cout &lt;&lt; test;
-    &#125;//仿函数写法按照需求非常多变
+	void operator()(string test) &#123;
+		cout &lt;&lt; test;
+	&#125;//仿函数写法按照需求非常多变
 &#125;;
 int main()
 &#123;
-    Myprint pr;
-    pr(&quot;hello world!&quot;);//使用起来非常像函数,于是称为仿函数qwqq
+	Myprint pr;
+	pr(&quot;hello world!&quot;);//使用起来非常像函数,于是称为仿函数qwqq
     Myprint()(&quot;hello c艹!&quot;);//匿名函数对象qwq
 
-    return 0;
+	return 0;
 &#125;
-</code></pre><h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p><strong>继承是面向对象三大特性之一</strong></p><p>有些类与类之间存在特殊的关系，例如下图中：</p><p><img data-src="01/22/c++%E9%9A%8F%E6%89%8B%E7%AC%94%E8%AE%B0/1544861202252.png" alt="1544861202252"></p><p><img data-src="1544861202252.png" alt="1544861202252"></p><p>我们发现，定义这些类时，下级别的成员除了拥有上一级的共性，还有自己的特性。</p><p>这个时候我们就可以考虑利用继承的技术，减少重复代码</p><h4 id="继承的基本语法"><a href="#继承的基本语法" class="headerlink" title="继承的基本语法"></a>继承的基本语法</h4><p>例如我们看到很多网站中，都有公共的头部，公共的底部，甚至公共的左侧列表，只有中心内容不同</p><pre><code class="c++">class BasePage &#123;
+</code></pre><h3 id="继承"><a class="anchor" href="#继承">#</a> 继承</h3><p><strong>继承是面向对象三大特性之一</strong></p><p>有些类与类之间存在特殊的关系，例如下图中：</p><p><img data-src="1544861202252.png" alt="1544861202252"></p><p><img data-src="1544861202252.png" alt="1544861202252"></p><p>我们发现，定义这些类时，下级别的成员除了拥有上一级的共性，还有自己的特性。</p><p>这个时候我们就可以考虑利用继承的技术，减少重复代码</p><h4 id="继承的基本语法"><a class="anchor" href="#继承的基本语法">#</a> 继承的基本语法</h4><p>例如我们看到很多网站中，都有公共的头部，公共的底部，甚至公共的左侧列表，只有中心内容不同</p><pre><code class="language-c++">class BasePage &#123;
 public:
-    void head() &#123;
-        cout &lt;&lt; &quot;这是公共头部&quot; &lt;&lt; endl;
-    &#125;
-    void foot() &#123;
-        cout &lt;&lt; &quot;这是公共底部&quot; &lt;&lt; endl;
-    &#125;
-    void left() &#123;
-        cout &lt;&lt; &quot;这是公共侧栏&quot; &lt;&lt; endl;
-    &#125;
+	void head() &#123;
+		cout &lt;&lt; &quot;这是公共头部&quot; &lt;&lt; endl;
+	&#125;
+	void foot() &#123;
+		cout &lt;&lt; &quot;这是公共底部&quot; &lt;&lt; endl;
+	&#125;
+	void left() &#123;
+		cout &lt;&lt; &quot;这是公共侧栏&quot; &lt;&lt; endl;
+	&#125;
 &#125;;//页面的公共类
 //c++页面
 class cpp :public BasePage &#123;
 public:
-    void content()
-    &#123;
-        cout &lt;&lt; &quot;c++&quot; &lt;&lt; endl;
-    &#125;
+	void content()
+	&#123;
+		cout &lt;&lt; &quot;c++&quot; &lt;&lt; endl;
+	&#125;
 &#125;;
 //java页面
 class java :public BasePage &#123;
 public:
-    void content()
-    &#123;
-        cout &lt;&lt; &quot;java&quot; &lt;&lt; endl;
-    &#125;
+	void content()
+	&#123;
+		cout &lt;&lt; &quot;java&quot; &lt;&lt; endl;
+	&#125;
 &#125;;
 //py页面
 class py :public BasePage &#123;
 public:
-    void content()
-    &#123;
-        cout &lt;&lt; &quot;py&quot; &lt;&lt; endl;
-    &#125;
+	void content()
+	&#123;
+		cout &lt;&lt; &quot;py&quot; &lt;&lt; endl;
+	&#125;
 &#125;;
 
 int main()
 &#123;
-    cpp().head();
-    cpp().foot();
-    cpp().left();
-    cpp().content();
-    cout &lt;&lt; &quot;------------------&quot; &lt;&lt; endl;
-    java().head();
-    java().foot();
-    java().left();
-    java().content();
-    cout &lt;&lt; &quot;------------------&quot; &lt;&lt; endl;
-    py().head();
-    py().foot();
-    py().left();
-    py().content();
-    return 0;
+	cpp().head();
+	cpp().foot();
+	cpp().left();
+	cpp().content();
+	cout &lt;&lt; &quot;------------------&quot; &lt;&lt; endl;
+	java().head();
+	java().foot();
+	java().left();
+	java().content();
+	cout &lt;&lt; &quot;------------------&quot; &lt;&lt; endl;
+	py().head();
+	py().foot();
+	py().left();
+	py().content();
+	return 0;
 &#125;
-</code></pre><p><strong>总结：</strong></p><p>继承的好处：==可以减少重复的代码==</p><p>class A : public B;</p><p>A 类称为子类 或 派生类</p><p>B 类称为父类 或 基类</p><p><strong>派生类中的成员，包含两大部分</strong>：</p><p>一类是从<strong>基类继承</strong>过来的，一类是<strong>自己增加</strong>的成员。</p><p>从基类继承过过来的表现其<strong>共性</strong>，而新增的成员体现了其<strong>个性</strong>。</p><h4 id="继承方式"><a href="#继承方式" class="headerlink" title="继承方式"></a>继承方式</h4><p>继承的语法：<code>class 子类 : 继承方式 父类</code></p><p><strong>继承方式一共有三种：</strong></p><ul><li>公共继承</li><li>保护继承</li><li>私有继承</li></ul><p><img data-src="01/22/c++%E9%9A%8F%E6%89%8B%E7%AC%94%E8%AE%B0/clip_image002.png" alt="clip_image002"></p><p><img data-src="clip_image002.png" alt="clip_image002"></p><h4 id="继承中的对象模型"><a href="#继承中的对象模型" class="headerlink" title="继承中的对象模型"></a>继承中的对象模型</h4><p><strong>问题：</strong>从父类继承过来的成员，哪些属于子类对象中？</p><p>结论：</p><ol><li><p>父类中所有<strong>非静态</strong>成员属性都会被子类继承下去</p></li><li><p>父类中私有成员<strong>也是被子类继承</strong>下去了，只是由编译器给隐藏后访问不到</p></li></ol><h4 id="继承中构造和析构顺序"><a href="#继承中构造和析构顺序" class="headerlink" title="继承中构造和析构顺序"></a>继承中构造和析构顺序</h4><p>子类继承父类后，当创建子类对象，也会调用父类的构造函数</p><p>问题：父类和子类的构造和析构顺序是谁先谁后？</p><blockquote><p>总结：继承中 先调用父类构造函数，再调用子类构造函数，析构顺序与构造相反</p></blockquote><h4 id="继承同名成员处理方式"><a href="#继承同名成员处理方式" class="headerlink" title="继承同名成员处理方式"></a>继承同名成员处理方式</h4><p>问题：当子类与父类出现同名的成员，如何通过子类对象，访问到子类或父类中同名的数据呢？</p><ul><li>访问子类同名成员 直接访问即可</li><li>访问父类同名成员 需要加作用域</li></ul><p>总结：</p><ol><li>子类对象可以直接访问到子类中同名成员</li><li>子类对象加作用域可以访问到父类同名成员</li><li>当子类与父类拥有同名的成员函数，子类会隐藏父类中同名成员函数，加作用域可以访问到父类中同名函数</li></ol><h4 id="继承同名静态成员处理方式"><a href="#继承同名静态成员处理方式" class="headerlink" title="继承同名静态成员处理方式"></a>继承同名静态成员处理方式</h4><p>问题：继承中同名的静态成员在子类对象上如何进行访问？</p><p>静态成员和非静态成员出现同名，处理方式一致</p><ul><li>访问子类同名成员 直接访问即可</li><li>访问父类同名成员 需要加作用域</li></ul><blockquote><p>总结：同名静态成员处理方式和非静态处理方式一样，只不过有两种访问的方式（通过对象 和 通过类名）</p></blockquote><h4 id="多继承语法"><a href="#多继承语法" class="headerlink" title="多继承语法"></a>多继承语法</h4><p>C++允许<strong>一个类继承多个类</strong></p><p>语法：<code>class 子类 ：继承方式 父类1 ， 继承方式 父类2...</code></p><p>多继承可能会引发父类中有同名成员出现，需要加作用域区分</p><p><strong>C++实际开发中不建议用多继承</strong></p><blockquote><p>总结： 多继承中如果父类中出现了同名情况，子类使用时候要加作用域</p></blockquote><h4 id="菱形继承"><a href="#菱形继承" class="headerlink" title="菱形继承"></a>菱形继承</h4><p><strong>菱形继承概念：</strong></p><p>​ 两个派生类继承同一个基类</p><p>​ 又有某个类同时继承者两个派生类</p><p>​ 这种继承被称为菱形继承，或者钻石继承</p><p><strong>典型的菱形继承案例：</strong></p><p><img data-src="01/22/c++%E9%9A%8F%E6%89%8B%E7%AC%94%E8%AE%B0/clip_image002.jpg" alt="IMG_256"></p><p><img data-src="c++%E9%9A%8F%E6%89%8B%E7%AC%94%E8%AE%B0%5Cclip_image002.jpg" alt="IMG_256"></p><p><strong>菱形继承问题：</strong></p><ol><li><pre><code>羊继承了动物的数据，驼同样继承了动物的数据，当草泥马使用数据时，就会产生二义性。
+</code></pre><p><strong>总结：</strong></p><p>继承的好处：<mark>可以减少重复的代码</mark></p><p>class A : public B;</p><p>A 类称为子类 或 派生类</p><p>B 类称为父类 或 基类</p><p><strong>派生类中的成员，包含两大部分</strong>：</p><p>一类是从<strong>基类继承</strong>过来的，一类是<strong>自己增加</strong>的成员。</p><p>从基类继承过过来的表现其<strong>共性</strong>，而新增的成员体现了其<strong>个性</strong>。</p><h4 id="继承方式"><a class="anchor" href="#继承方式">#</a> 继承方式</h4><p>继承的语法： <code>class 子类 : 继承方式 父类</code></p><p><strong>继承方式一共有三种：</strong></p><ul><li>公共继承</li><li>保护继承</li><li>私有继承</li></ul><p><img data-src="clip_image002.png" alt="clip_image002"></p><p><img data-src="clip_image002.png" alt="clip_image002"></p><h4 id="继承中的对象模型"><a class="anchor" href="#继承中的对象模型">#</a> 继承中的对象模型</h4><p>** 问题：** 从父类继承过来的成员，哪些属于子类对象中？</p><p>结论：</p><ol><li><p>父类中所有<strong>非静态</strong>成员属性都会被子类继承下去</p></li><li><p>父类中私有成员<strong>也是被子类继承</strong>下去了，只是由编译器给隐藏后访问不到</p></li></ol><h4 id="继承中构造和析构顺序"><a class="anchor" href="#继承中构造和析构顺序">#</a> 继承中构造和析构顺序</h4><p>子类继承父类后，当创建子类对象，也会调用父类的构造函数</p><p>问题：父类和子类的构造和析构顺序是谁先谁后？</p><blockquote><p>总结：继承中 先调用父类构造函数，再调用子类构造函数，析构顺序与构造相反</p></blockquote><h4 id="继承同名成员处理方式"><a class="anchor" href="#继承同名成员处理方式">#</a> 继承同名成员处理方式</h4><p>问题：当子类与父类出现同名的成员，如何通过子类对象，访问到子类或父类中同名的数据呢？</p><ul><li>访问子类同名成员 直接访问即可</li><li>访问父类同名成员 需要加作用域</li></ul><p>总结：</p><ol><li>子类对象可以直接访问到子类中同名成员</li><li>子类对象加作用域可以访问到父类同名成员</li><li>当子类与父类拥有同名的成员函数，子类会隐藏父类中同名成员函数，加作用域可以访问到父类中同名函数</li></ol><h4 id="继承同名静态成员处理方式"><a class="anchor" href="#继承同名静态成员处理方式">#</a> 继承同名静态成员处理方式</h4><p>问题：继承中同名的静态成员在子类对象上如何进行访问？</p><p>静态成员和非静态成员出现同名，处理方式一致</p><ul><li>访问子类同名成员 直接访问即可</li><li>访问父类同名成员 需要加作用域</li></ul><blockquote><p>总结：同名静态成员处理方式和非静态处理方式一样，只不过有两种访问的方式（通过对象 和 通过类名）</p></blockquote><h4 id="多继承语法"><a class="anchor" href="#多继承语法">#</a> 多继承语法</h4><p>C++ 允许<strong>一个类继承多个类</strong></p><p>语法： <code>class 子类 ：继承方式 父类1 ， 继承方式 父类2...</code></p><p>多继承可能会引发父类中有同名成员出现，需要加作用域区分</p><p><strong>C++ 实际开发中不建议用多继承</strong></p><blockquote><p>总结： 多继承中如果父类中出现了同名情况，子类使用时候要加作用域</p></blockquote><h4 id="菱形继承"><a class="anchor" href="#菱形继承">#</a> 菱形继承</h4><p><strong>菱形继承概念：</strong></p><p>​	两个派生类继承同一个基类</p><p>​	又有某个类同时继承者两个派生类</p><p>​	这种继承被称为菱形继承，或者钻石继承</p><p><strong>典型的菱形继承案例：</strong></p><p><img data-src="clip_image002.jpg" alt="IMG_256"></p><p><img data-src="c++%E9%9A%8F%E6%89%8B%E7%AC%94%E8%AE%B0%5Cclip_image002.jpg" alt="IMG_256"></p><p><strong>菱形继承问题：</strong></p><ol><li><pre><code>羊继承了动物的数据，驼同样继承了动物的数据，当草泥马使用数据时，就会产生二义性。
 </code></pre></li><li><pre><code>草泥马继承自动物的数据继承了两份，其实我们应该清楚，这份数据我们只需要一份就可以。
-</code></pre></li></ol><p>使用虚继承:</p><ul><li>继承前加<strong>virtual关键字</strong>后，变为虚继承,此时公共的父类称为虚基类</li><li>虚继承实际上是创建了一个父类对象,对两个子类赋予的是该父对象的指针</li><li>此时两种子类都可对一个那一个父类对象操作</li></ul><pre><code class="c++">class Son : virtual public Father &#123; &#125;;
-</code></pre><p>总结：</p><ul><li>菱形继承带来的主要问题是子类继承两份相同的数据，导致资源浪费以及毫无意义</li><li>利用虚继承可以解决菱形继承问题</li></ul><h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><h4 id="多态的基本概念"><a href="#多态的基本概念" class="headerlink" title="多态的基本概念"></a>多态的基本概念</h4><p><strong>多态是C++面向对象三大特性之一</strong></p><p>多态分为两类</p><ul><li>静态多态: <strong>函数重载</strong> 和 <strong>运算符重载</strong>属于<strong>静态多态</strong>，复用函数名</li><li>动态多态: <strong>派生类和虚函数</strong>实现运行时多态</li></ul><p>静态多态和动态多态区别：</p><ul><li>静态多态的函数地址早绑定 - 编译阶段确定函数地址</li><li>动态多态的函数地址晚绑定 - 运行阶段确定函数地址</li></ul><pre><code class="c++">class Man &#123;
+</code></pre></li></ol><p>使用虚继承:</p><ul><li>继承前加<strong> virtual 关键字</strong>后，变为虚继承，此时公共的父类称为虚基类</li><li>虚继承实际上是创建了一个父类对象，对两个子类赋予的是该父对象的指针</li><li>此时两种子类都可对一个那一个父类对象操作</li></ul><pre><code class="language-c++">class Son : virtual public Father &#123; &#125;;
+</code></pre><p>总结：</p><ul><li>菱形继承带来的主要问题是子类继承两份相同的数据，导致资源浪费以及毫无意义</li><li>利用虚继承可以解决菱形继承问题</li></ul><h3 id="多态"><a class="anchor" href="#多态">#</a> 多态</h3><h4 id="多态的基本概念"><a class="anchor" href="#多态的基本概念">#</a> 多态的基本概念</h4><p><strong>多态是 C++ 面向对象三大特性之一</strong></p><p>多态分为两类</p><ul><li>静态多态: <strong>函数重载</strong> 和 <strong>运算符重载</strong>属于<strong>静态多态</strong>，复用函数名</li><li>动态多态: <strong>派生类和虚函数</strong>实现运行时多态</li></ul><p>静态多态和动态多态区别：</p><ul><li>静态多态的函数地址早绑定 - 编译阶段确定函数地址</li><li>动态多态的函数地址晚绑定 - 运行阶段确定函数地址</li></ul><pre><code class="language-c++">class Man &#123;
 public:
-    virtual void speak() &#123;
-        cout &lt;&lt; &quot;阿巴阿巴阿巴...&quot; &lt;&lt; endl;
-    &#125;//将父类中的同名函数写成虚函数就可以了_(:з」∠)_
+	virtual void speak() &#123;
+		cout &lt;&lt; &quot;阿巴阿巴阿巴...&quot; &lt;&lt; endl;
+	&#125;//将父类中的同名函数写成虚函数就可以了_(:з」∠)_
 &#125;;
 class Erciyuan :public Man &#123;
 public:
-    void speak() &#123;
-        cout &lt;&lt; &quot;诶多诶多~「多洗忒」?为什么要「妄.图.抹.杀」这样的「自己」呢?★(笑)呐、「中二病的你」也好、「二次元的你」也好....「全部」daisuki~&gt;w&lt;呐~二次元民那赛高desuwa!&quot; &lt;&lt; endl;
-    &#125;
+	void speak() &#123;
+		cout &lt;&lt; &quot;诶多诶多~「多洗忒」?为什么要「妄.图.抹.杀」这样的「自己」呢?★(笑)呐、「中二病的你」也好、「二次元的你」也好....「全部」daisuki~&gt;w&lt;呐~二次元民那赛高desuwa!&quot; &lt;&lt; endl;
+	&#125;
 &#125;;
 class Programmer :public Man &#123;
 public:
-    void speak() &#123;
-        cout &lt;&lt; &quot;写你妈的注释! 这傻逼怎么不写注释!!!&quot; &lt;&lt; endl;
-    &#125;
+	void speak() &#123;
+		cout &lt;&lt; &quot;写你妈的注释! 这傻逼怎么不写注释!!!&quot; &lt;&lt; endl;
+	&#125;
 &#125;;
 void speak(Man&amp; man) &#123;
-    man.speak();
-    //写这种通用函数时想让它按传入对象的类不同来执行不同的类中的方法时
-    //该函数的地址不能在编译阶段确定
-    //需要在运行阶段根据传入数据的类型确定函数的地址qwqq
-    //需要用到虚函数
+	man.speak();
+	//写这种通用函数时想让它按传入对象的类不同来执行不同的类中的方法时
+	//该函数的地址不能在编译阶段确定
+	//需要在运行阶段根据传入数据的类型确定函数的地址qwqq
+	//需要用到虚函数
 &#125;
 int main()
 &#123;
-    Man a;
-    Erciyuan b;
-    Programmer c;
-    speak(a);
-    speak(b);
-    speak(c);
+	Man a;
+	Erciyuan b;
+	Programmer c;
+	speak(a);
+	speak(b);
+	speak(c);
 
-    return 0;
+	return 0;
 &#125;
-</code></pre><p>总结：</p><p>多态满足条件</p><ul><li>有继承关系</li><li>子类重写父类中的虚函数</li></ul><p>多态使用条件</p><ul><li>父类指针或引用指向子类对象</li></ul><p>重写：函数返回值类型 函数名 参数列表 完全一致称为重写</p><p>多态的优点：</p><ul><li>代码组织结构清晰</li><li>可读性强</li><li>利于前期和后期的扩展以及维护</li></ul><blockquote><p>总结：C++开发提倡利用多态设计程序架构，因为多态优点很多</p></blockquote><h4 id="纯虚函数和抽象类"><a href="#纯虚函数和抽象类" class="headerlink" title="纯虚函数和抽象类"></a>纯虚函数和抽象类</h4><p>在多态中，通常父类中虚函数的实现是毫无意义的，主要都是调用子类重写的内容</p><p>因此可以将虚函数改为<strong>纯虚函数</strong></p><p>纯虚函数语法：<code>virtual 返回值类型 函数名 （参数列表）= 0 ;</code></p><p>当类中有了纯虚函数，这个类也称为==抽象类==</p><pre><code class="c++">class Man &#123;
+</code></pre><p>总结：</p><p>多态满足条件</p><ul><li>有继承关系</li><li>子类重写父类中的虚函数</li></ul><p>多态使用条件</p><ul><li>父类指针或引用指向子类对象</li></ul><p>重写：函数返回值类型 函数名 参数列表 完全一致称为重写</p><p>多态的优点：</p><ul><li>代码组织结构清晰</li><li>可读性强</li><li>利于前期和后期的扩展以及维护</li></ul><blockquote><p>总结：C++ 开发提倡利用多态设计程序架构，因为多态优点很多</p></blockquote><h4 id="纯虚函数和抽象类"><a class="anchor" href="#纯虚函数和抽象类">#</a> 纯虚函数和抽象类</h4><p>在多态中，通常父类中虚函数的实现是毫无意义的，主要都是调用子类重写的内容</p><p>因此可以将虚函数改为<strong>纯虚函数</strong></p><p>纯虚函数语法： <code>virtual 返回值类型 函数名 （参数列表）= 0 ;</code></p><p>当类中有了纯虚函数，这个类也称为<mark>抽象类</mark></p><pre><code class="language-c++">class Man &#123;
 public:
-    virtual void speak() = 0;
-    //只要有一个纯虚函数,这个类称为抽象类
-    //抽象类特点:
-    //无法实例化对象
-    //子类必须重写抽象类中的纯虚函数，否则也属于抽象类
+	virtual void speak() = 0;
+	//只要有一个纯虚函数,这个类称为抽象类
+	//抽象类特点:
+	//无法实例化对象
+	//子类必须重写抽象类中的纯虚函数，否则也属于抽象类
 &#125;;
 class Erciyuan :public Man &#123;
 public:
-    void speak() &#123;
-        cout &lt;&lt; &quot;诶多诶多~「多洗忒」?为什么要「妄.图.抹.杀」这样的「自己」呢?★(笑)呐、「中二病的你」也好、「二次元的你」也好....「全部」daisuki~&gt;w&lt;呐~二次元民那赛高desuwa!&quot; &lt;&lt; endl;
-    &#125;
+	void speak() &#123;
+		cout &lt;&lt; &quot;诶多诶多~「多洗忒」?为什么要「妄.图.抹.杀」这样的「自己」呢?★(笑)呐、「中二病的你」也好、「二次元的你」也好....「全部」daisuki~&gt;w&lt;呐~二次元民那赛高desuwa!&quot; &lt;&lt; endl;
+	&#125;
 &#125;;
 class Programmer :public Man &#123;
 public:
-    void speak() &#123;
-        cout &lt;&lt; &quot;写你妈的注释! 这傻逼怎么不写注释!!!&quot; &lt;&lt; endl;
-    &#125;
+	void speak() &#123;
+		cout &lt;&lt; &quot;写你妈的注释! 这傻逼怎么不写注释!!!&quot; &lt;&lt; endl;
+	&#125;
 &#125;;
 void speak(Man&amp; man) &#123;
-    man.speak();
+	man.speak();
 &#125;
 int main()
 &#123;
-    //Man a;
-    Erciyuan b;
-    Programmer c;
-    //speak(a);
-    speak(b);
-    speak(c);
+	//Man a;
+	Erciyuan b;
+	Programmer c;
+	//speak(a);
+	speak(b);
+	speak(c);
 
-    return 0;
+	return 0;
 &#125;
-</code></pre><p><strong>抽象类特点</strong>：</p><ul><li>无法实例化对象</li><li>子类必须重写抽象类中的纯虚函数，否则也属于抽象类</li></ul><h4 id="虚析构和纯虚析构"><a href="#虚析构和纯虚析构" class="headerlink" title="虚析构和纯虚析构"></a>虚析构和纯虚析构</h4><p>多态使用时，如果子类中有属性开辟到堆区，那么<strong>父类指针</strong>在释放时无法调用到子类的析构代码</p><p>解决方式：将父类中的析构函数改为<strong>虚析构</strong>或者<strong>纯虚析构</strong></p><p>虚析构和纯虚析构共性：</p><ul><li>可以解决父类指针释放子类对象</li><li>都需要有具体的函数实现</li></ul><p>虚析构和纯虚析构区别：</p><ul><li>如果是纯虚析构，该类属于抽象类，无法实例化对象</li></ul><p>虚析构语法：</p><p><code>virtual ~类名()&#123;&#125;</code></p><p>纯虚析构语法：</p><p><code>virtual ~类名() = 0;</code></p><p><code>类名::~类名()&#123;&#125;</code></p><pre><code class="c++">class Man &#123;
+</code></pre><p><strong>抽象类特点</strong>：</p><ul><li>无法实例化对象</li><li>子类必须重写抽象类中的纯虚函数，否则也属于抽象类</li></ul><h4 id="虚析构和纯虚析构"><a class="anchor" href="#虚析构和纯虚析构">#</a> 虚析构和纯虚析构</h4><p>多态使用时，如果子类中有属性开辟到堆区，那么<strong>父类指针</strong>在释放时无法调用到子类的析构代码</p><p>解决方式：将父类中的析构函数改为<strong>虚析构</strong>或者<strong>纯虚析构</strong></p><p>虚析构和纯虚析构共性：</p><ul><li>可以解决父类指针释放子类对象</li><li>都需要有具体的函数实现</li></ul><p>虚析构和纯虚析构区别：</p><ul><li>如果是纯虚析构，该类属于抽象类，无法实例化对象</li></ul><p>虚析构语法：</p><p><code>virtual ~类名()&#123;&#125;</code></p><p>纯虚析构语法：</p><p><code>virtual ~类名() = 0;</code></p><p><code>类名::~类名()&#123;&#125;</code></p><pre><code class="language-c++">class Man &#123;
 public:
-    Man()
-    &#123;
-        cout &lt;&lt; &quot;Man构造函数的调用&quot; &lt;&lt; endl;
-    &#125;
-    virtual ~Man()
-    &#123;
-        cout &lt;&lt; &quot;Man析构函数的调用&quot; &lt;&lt; endl;
-    &#125;
-    virtual void speak() = 0;
+	Man()
+	&#123;
+		cout &lt;&lt; &quot;Man构造函数的调用&quot; &lt;&lt; endl;
+	&#125;
+	virtual ~Man()
+	&#123;
+		cout &lt;&lt; &quot;Man析构函数的调用&quot; &lt;&lt; endl;
+	&#125;
+	virtual void speak() = 0;
 &#125;;
 class Programmer :public Man &#123;
 public:
-    string* name;
+	string* name;
 
-    Programmer(string name) &#123;
-        cout &lt;&lt; &quot;Programmer类构造函数调用&quot; &lt;&lt; endl;
-        this-&gt;name = new string(name);
-    &#125;
-    ~Programmer() &#123;
-        cout &lt;&lt; &quot;Programmer类析构函数调用&quot; &lt;&lt; endl;
-        if (name != NULL) &#123;
-            delete name;
-            name = NULL;
-        &#125;
-    &#125;
-    void speak() &#123;
-        cout &lt;&lt; &quot;写你妈的注释! 这傻逼怎么不写注释!!!&quot; &lt;&lt; endl;
-    &#125;
+	Programmer(string name) &#123;
+		cout &lt;&lt; &quot;Programmer类构造函数调用&quot; &lt;&lt; endl;
+		this-&gt;name = new string(name);
+	&#125;
+	~Programmer() &#123;
+		cout &lt;&lt; &quot;Programmer类析构函数调用&quot; &lt;&lt; endl;
+		if (name != NULL) &#123;
+			delete name;
+			name = NULL;
+		&#125;
+	&#125;
+	void speak() &#123;
+		cout &lt;&lt; &quot;写你妈的注释! 这傻逼怎么不写注释!!!&quot; &lt;&lt; endl;
+	&#125;
 &#125;;
 
 int main()
 &#123;
-    Man* a = new Programmer(&quot;张三&quot;);
-    a-&gt;speak();
-    delete a;
-    return 0;
+	Man* a = new Programmer(&quot;张三&quot;);
+	a-&gt;speak();
+	delete a;
+	return 0;
 &#125;
 out:
 Man构造函数的调用
@@ -771,4 +773,5 @@ Programmer类构造函数调用
 写你妈的注释! 这傻逼怎么不写注释!!!
 **Programmer类析构函数调用**
 Man析构函数的调用
-</code></pre><p>总结：</p><p>​ 1. 虚析构或纯虚析构就是用来解决通过父类指针释放子类对象</p><p>​ 2. 如果子类中没有堆区数据，可以不写为虚析构或纯虚析构</p><p>​ 3. 拥有纯虚析构函数的类也属于抽象类</p></div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i> </span><span class="text">更新于</span> <time title="修改时间：2021-01-27 18:57:12" itemprop="dateModified" datetime="2021-01-27T18:57:12+08:00">2021-01-27</time></span></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/wechatpay.png" alt="Ling yunchi 微信支付"><p>微信支付</p></div><div><img data-src="/images/alipay.png" alt="Ling yunchi 支付宝"><p>支付宝</p></div><div><img data-src="/images/paypal.png" alt="Ling yunchi 贝宝"><p>贝宝</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Ling yunchi <i class="ic i-at"><em>@</em></i>QWQ</li><li class="link"><strong>本文链接：</strong> <a href="https://ling-yunchi.github.io/2021/01/22/c++%E9%9A%8F%E6%89%8B%E7%AC%94%E8%AE%B0/" title="c++随手笔记">https://ling-yunchi.github.io/2021/01/22/c++随手笔记/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2021/01/22/java%E4%B8%AD%E8%BE%93%E5%85%A5%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E5%9D%91/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipexw3o58j20zk0m8e81.jpg" title="java中输入的一个小坑"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i></span><h3>java中输入的一个小坑</h3></a></div><div class="item right"><a href="/2021/01/25/git%E7%AC%94%E8%AE%B0/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipeubcbajj20zk0m8h1h.jpg" title="git笔记"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i></span><h3>git笔记</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%88%86%E5%8C%BA%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">内存分区模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E5%89%8D"><span class="toc-number">1.1.</span> <span class="toc-text">程序运行前</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E5%90%8E"><span class="toc-number">1.2.</span> <span class="toc-text">程序运行后</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#new%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">2.</span> <span class="toc-text">new运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">3.1.</span> <span class="toc-text">引用的基本使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%81%9A%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0"><span class="toc-number">3.2.</span> <span class="toc-text">引用做函数参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%81%9A%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-number">3.3.</span> <span class="toc-text">引用做函数返回值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-number">3.4.</span> <span class="toc-text">引用的本质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F%E5%BC%95%E7%94%A8"><span class="toc-number">3.5.</span> <span class="toc-text">常量引用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0"><span class="toc-number">4.1.</span> <span class="toc-text">函数默认参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%8D%A0%E4%BD%8D%E5%8F%82%E6%95%B0"><span class="toc-number">4.2.</span> <span class="toc-text">函数占位参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD"><span class="toc-number">4.3.</span> <span class="toc-text">函数重载</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD%E6%A6%82%E8%BF%B0"><span class="toc-number">4.3.1.</span> <span class="toc-text">函数重载概述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">4.3.2.</span> <span class="toc-text">函数重载注意事项</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1"><span class="toc-number">5.</span> <span class="toc-text">类和对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%81%E8%A3%85"><span class="toc-number">5.1.</span> <span class="toc-text">封装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%81%E8%A3%85%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-number">5.1.1.</span> <span class="toc-text">封装的意义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#struct%E5%92%8Cclass%E5%8C%BA%E5%88%AB"><span class="toc-number">5.1.2.</span> <span class="toc-text">struct和class区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%B1%9E%E6%80%A7%E8%AE%BE%E7%BD%AE%E4%B8%BA%E7%A7%81%E6%9C%89"><span class="toc-number">5.1.3.</span> <span class="toc-text">成员属性设置为私有</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E6%B8%85%E7%90%86"><span class="toc-number">5.2.</span> <span class="toc-text">对象的初始化和清理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0"><span class="toc-number">5.2.1.</span> <span class="toc-text">构造函数和析构函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E5%88%86%E7%B1%BB%E5%8F%8A%E8%B0%83%E7%94%A8"><span class="toc-number">5.2.2.</span> <span class="toc-text">构造函数的分类及调用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%97%B6%E6%9C%BA"><span class="toc-number">5.2.3.</span> <span class="toc-text">拷贝构造函数调用时机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E8%A7%84%E5%88%99"><span class="toc-number">5.2.4.</span> <span class="toc-text">构造函数调用规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B5%85%E6%8B%B7%E8%B4%9D"><span class="toc-number">5.2.5.</span> <span class="toc-text">深拷贝与浅拷贝</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8"><span class="toc-number">5.2.6.</span> <span class="toc-text">初始化列表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%AF%B9%E8%B1%A1%E4%BD%9C%E4%B8%BA%E7%B1%BB%E6%88%90%E5%91%98"><span class="toc-number">5.2.7.</span> <span class="toc-text">类对象作为类成员</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%88%90%E5%91%98"><span class="toc-number">5.2.8.</span> <span class="toc-text">静态成员</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B%E5%92%8Cthis%E6%8C%87%E9%92%88"><span class="toc-number">5.3.</span> <span class="toc-text">C++对象模型和this指针</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E5%92%8C%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E5%88%86%E5%BC%80%E5%AD%98%E5%82%A8"><span class="toc-number">5.3.1.</span> <span class="toc-text">成员变量和成员函数分开存储</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#this%E6%8C%87%E9%92%88%E6%A6%82%E5%BF%B5"><span class="toc-number">5.3.2.</span> <span class="toc-text">this指针概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A9%BA%E6%8C%87%E9%92%88%E8%AE%BF%E9%97%AE%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0"><span class="toc-number">5.3.3.</span> <span class="toc-text">空指针访问成员函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#const%E4%BF%AE%E9%A5%B0%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0"><span class="toc-number">5.3.4.</span> <span class="toc-text">const修饰成员函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8B%E5%85%83"><span class="toc-number">5.4.</span> <span class="toc-text">友元</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%87%BD%E6%95%B0%E5%81%9A%E5%8F%8B%E5%85%83"><span class="toc-number">5.4.1.</span> <span class="toc-text">全局函数做友元</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%81%9A%E5%8F%8B%E5%85%83"><span class="toc-number">5.4.2.</span> <span class="toc-text">类做友元</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E5%81%9A%E5%8F%8B%E5%85%83"><span class="toc-number">5.4.3.</span> <span class="toc-text">成员函数做友元</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">5.5.</span> <span class="toc-text">运算符重载</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A0%E5%8F%B7%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">5.5.1.</span> <span class="toc-text">加号运算符重载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A6%E7%A7%BB%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">5.5.2.</span> <span class="toc-text">左移运算符重载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%92%E5%A2%9E%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">5.5.3.</span> <span class="toc-text">递增运算符重载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">5.5.4.</span> <span class="toc-text">赋值运算符重载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">5.5.5.</span> <span class="toc-text">关系运算符重载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">5.5.6.</span> <span class="toc-text">函数调用运算符重载</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF"><span class="toc-number">5.6.</span> <span class="toc-text">继承</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="toc-number">5.6.1.</span> <span class="toc-text">继承的基本语法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E6%96%B9%E5%BC%8F"><span class="toc-number">5.6.2.</span> <span class="toc-text">继承方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E4%B8%AD%E7%9A%84%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B"><span class="toc-number">5.6.3.</span> <span class="toc-text">继承中的对象模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E4%B8%AD%E6%9E%84%E9%80%A0%E5%92%8C%E6%9E%90%E6%9E%84%E9%A1%BA%E5%BA%8F"><span class="toc-number">5.6.4.</span> <span class="toc-text">继承中构造和析构顺序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E5%90%8C%E5%90%8D%E6%88%90%E5%91%98%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F"><span class="toc-number">5.6.5.</span> <span class="toc-text">继承同名成员处理方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E5%90%8C%E5%90%8D%E9%9D%99%E6%80%81%E6%88%90%E5%91%98%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F"><span class="toc-number">5.6.6.</span> <span class="toc-text">继承同名静态成员处理方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E7%BB%A7%E6%89%BF%E8%AF%AD%E6%B3%95"><span class="toc-number">5.6.7.</span> <span class="toc-text">多继承语法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8F%B1%E5%BD%A2%E7%BB%A7%E6%89%BF"><span class="toc-number">5.6.8.</span> <span class="toc-text">菱形继承</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%80%81"><span class="toc-number">5.7.</span> <span class="toc-text">多态</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E6%80%81%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">5.7.1.</span> <span class="toc-text">多态的基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0%E5%92%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="toc-number">5.7.2.</span> <span class="toc-text">纯虚函数和抽象类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%9E%90%E6%9E%84%E5%92%8C%E7%BA%AF%E8%99%9A%E6%9E%90%E6%9E%84"><span class="toc-number">5.7.3.</span> <span class="toc-text">虚析构和纯虚析构</span></a></li></ol></li></ol></li></ol></div><div class="related panel pjax" data-title="系列文章"></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Ling yunchi" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Ling yunchi</p><div class="description" itemprop="description">qwqqqq</div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">39</span> <span class="name">文章</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL0xpbmcteXVuY2hp" title="https:&#x2F;&#x2F;github.com&#x2F;Ling-yunchi"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;twitter.com&#x2F;yourname"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;yourname"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvdXNlci9ob21lP2lkPXlvdXJpZA==" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;yourid"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;about.me&#x2F;yourname"><i class="ic i-address-card"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/about/" rel="section"><i class="ic i-user"></i>关于</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/2021/01/22/java%E4%B8%AD%E8%BE%93%E5%85%A5%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E5%9D%91/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2021/01/25/git%E7%AC%94%E8%AE%B0/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"></div><div class="status"><div class="copyright">&copy; 2010 – <span itemprop="copyrightYear">2021</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Ling yunchi @ Ling Yunchi</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"2021/01/22/c++随手笔记/",favicon:{show:"（●´3｀●）やれやれだぜ",hide:"(´Д｀)大変だ！"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:!0,fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(e){return e.includes("#")},function(e){return new RegExp(LOCAL.path+"$").test(e)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script></body></html><!-- rebuild by hrmmi -->
+
+</code></pre><p>总结：</p><p>​	1. 虚析构或纯虚析构就是用来解决通过父类指针释放子类对象</p><p>​	2. 如果子类中没有堆区数据，可以不写为虚析构或纯虚析构</p><p>​	3. 拥有纯虚析构函数的类也属于抽象类</p></div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i> </span><span class="text">更新于</span> <time title="修改时间：2021-01-27 18:57:12" itemprop="dateModified" datetime="2021-01-27T18:57:12+08:00">2021-01-27</time></span></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/wechatpay.png" alt="Ling yunchi 微信支付"><p>微信支付</p></div><div><img data-src="/images/alipay.png" alt="Ling yunchi 支付宝"><p>支付宝</p></div><div><img data-src="/images/paypal.png" alt="Ling yunchi 贝宝"><p>贝宝</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Ling yunchi <i class="ic i-at"><em>@</em></i>QWQ</li><li class="link"><strong>本文链接：</strong> <a href="https://ling-yunchi.github.io/2021/01/22/c++%E9%9A%8F%E6%89%8B%E7%AC%94%E8%AE%B0/" title="c++随手笔记">https://ling-yunchi.github.io/2021/01/22/c++随手笔记/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2021/01/22/java%E4%B8%AD%E8%BE%93%E5%85%A5%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E5%9D%91/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giciundwu5j20zk0m8n9e.jpg" title="java中输入的一个小坑"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i></span><h3>java中输入的一个小坑</h3></a></div><div class="item right"><a href="/2021/01/25/git%E7%AC%94%E8%AE%B0/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipev1x5e4j20zk0m8b29.jpg" title="git笔记"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i></span><h3>git笔记</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%88%86%E5%8C%BA%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">内存分区模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E5%89%8D"><span class="toc-number">1.1.</span> <span class="toc-text">程序运行前</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E5%90%8E"><span class="toc-number">1.2.</span> <span class="toc-text">程序运行后</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#new%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">2.</span> <span class="toc-text">new 运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">3.1.</span> <span class="toc-text">引用的基本使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%81%9A%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0"><span class="toc-number">3.2.</span> <span class="toc-text">引用做函数参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%81%9A%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-number">3.3.</span> <span class="toc-text">引用做函数返回值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-number">3.4.</span> <span class="toc-text">引用的本质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F%E5%BC%95%E7%94%A8"><span class="toc-number">3.5.</span> <span class="toc-text">常量引用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0"><span class="toc-number">4.1.</span> <span class="toc-text">函数默认参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%8D%A0%E4%BD%8D%E5%8F%82%E6%95%B0"><span class="toc-number">4.2.</span> <span class="toc-text">函数占位参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD"><span class="toc-number">4.3.</span> <span class="toc-text">函数重载</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD%E6%A6%82%E8%BF%B0"><span class="toc-number">4.3.1.</span> <span class="toc-text">函数重载概述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">4.3.2.</span> <span class="toc-text">函数重载注意事项</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1"><span class="toc-number">5.</span> <span class="toc-text">类和对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%81%E8%A3%85"><span class="toc-number">5.1.</span> <span class="toc-text">封装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%81%E8%A3%85%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-number">5.1.1.</span> <span class="toc-text">封装的意义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#struct%E5%92%8Cclass%E5%8C%BA%E5%88%AB"><span class="toc-number">5.1.2.</span> <span class="toc-text">struct 和 class 区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%B1%9E%E6%80%A7%E8%AE%BE%E7%BD%AE%E4%B8%BA%E7%A7%81%E6%9C%89"><span class="toc-number">5.1.3.</span> <span class="toc-text">成员属性设置为私有</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E6%B8%85%E7%90%86"><span class="toc-number">5.2.</span> <span class="toc-text">对象的初始化和清理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0"><span class="toc-number">5.2.1.</span> <span class="toc-text">构造函数和析构函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E5%88%86%E7%B1%BB%E5%8F%8A%E8%B0%83%E7%94%A8"><span class="toc-number">5.2.2.</span> <span class="toc-text">构造函数的分类及调用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%97%B6%E6%9C%BA"><span class="toc-number">5.2.3.</span> <span class="toc-text">拷贝构造函数调用时机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E8%A7%84%E5%88%99"><span class="toc-number">5.2.4.</span> <span class="toc-text">构造函数调用规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B5%85%E6%8B%B7%E8%B4%9D"><span class="toc-number">5.2.5.</span> <span class="toc-text">深拷贝与浅拷贝</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8"><span class="toc-number">5.2.6.</span> <span class="toc-text">初始化列表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%AF%B9%E8%B1%A1%E4%BD%9C%E4%B8%BA%E7%B1%BB%E6%88%90%E5%91%98"><span class="toc-number">5.2.7.</span> <span class="toc-text">类对象作为类成员</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%88%90%E5%91%98"><span class="toc-number">5.2.8.</span> <span class="toc-text">静态成员</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#c%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B%E5%92%8Cthis%E6%8C%87%E9%92%88"><span class="toc-number">5.3.</span> <span class="toc-text">C++ 对象模型和 this 指针</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E5%92%8C%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E5%88%86%E5%BC%80%E5%AD%98%E5%82%A8"><span class="toc-number">5.3.1.</span> <span class="toc-text">成员变量和成员函数分开存储</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#this%E6%8C%87%E9%92%88%E6%A6%82%E5%BF%B5"><span class="toc-number">5.3.2.</span> <span class="toc-text">this 指针概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A9%BA%E6%8C%87%E9%92%88%E8%AE%BF%E9%97%AE%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0"><span class="toc-number">5.3.3.</span> <span class="toc-text">空指针访问成员函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#const%E4%BF%AE%E9%A5%B0%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0"><span class="toc-number">5.3.4.</span> <span class="toc-text">const 修饰成员函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8B%E5%85%83"><span class="toc-number">5.4.</span> <span class="toc-text">友元</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%87%BD%E6%95%B0%E5%81%9A%E5%8F%8B%E5%85%83"><span class="toc-number">5.4.1.</span> <span class="toc-text">全局函数做友元</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%81%9A%E5%8F%8B%E5%85%83"><span class="toc-number">5.4.2.</span> <span class="toc-text">类做友元</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E5%81%9A%E5%8F%8B%E5%85%83"><span class="toc-number">5.4.3.</span> <span class="toc-text">成员函数做友元</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">5.5.</span> <span class="toc-text">运算符重载</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A0%E5%8F%B7%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">5.5.1.</span> <span class="toc-text">加号运算符重载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A6%E7%A7%BB%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">5.5.2.</span> <span class="toc-text">左移运算符重载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%92%E5%A2%9E%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">5.5.3.</span> <span class="toc-text">递增运算符重载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">5.5.4.</span> <span class="toc-text">赋值运算符重载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">5.5.5.</span> <span class="toc-text">关系运算符重载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">5.5.6.</span> <span class="toc-text">函数调用运算符重载</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF"><span class="toc-number">5.6.</span> <span class="toc-text">继承</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="toc-number">5.6.1.</span> <span class="toc-text">继承的基本语法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E6%96%B9%E5%BC%8F"><span class="toc-number">5.6.2.</span> <span class="toc-text">继承方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E4%B8%AD%E7%9A%84%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B"><span class="toc-number">5.6.3.</span> <span class="toc-text">继承中的对象模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E4%B8%AD%E6%9E%84%E9%80%A0%E5%92%8C%E6%9E%90%E6%9E%84%E9%A1%BA%E5%BA%8F"><span class="toc-number">5.6.4.</span> <span class="toc-text">继承中构造和析构顺序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E5%90%8C%E5%90%8D%E6%88%90%E5%91%98%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F"><span class="toc-number">5.6.5.</span> <span class="toc-text">继承同名成员处理方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E5%90%8C%E5%90%8D%E9%9D%99%E6%80%81%E6%88%90%E5%91%98%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F"><span class="toc-number">5.6.6.</span> <span class="toc-text">继承同名静态成员处理方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E7%BB%A7%E6%89%BF%E8%AF%AD%E6%B3%95"><span class="toc-number">5.6.7.</span> <span class="toc-text">多继承语法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8F%B1%E5%BD%A2%E7%BB%A7%E6%89%BF"><span class="toc-number">5.6.8.</span> <span class="toc-text">菱形继承</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%80%81"><span class="toc-number">5.7.</span> <span class="toc-text">多态</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E6%80%81%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">5.7.1.</span> <span class="toc-text">多态的基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0%E5%92%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="toc-number">5.7.2.</span> <span class="toc-text">纯虚函数和抽象类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%9E%90%E6%9E%84%E5%92%8C%E7%BA%AF%E8%99%9A%E6%9E%90%E6%9E%84"><span class="toc-number">5.7.3.</span> <span class="toc-text">虚析构和纯虚析构</span></a></li></ol></li></ol></li></ol></div><div class="related panel pjax" data-title="系列文章"></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Ling yunchi" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Ling yunchi</p><div class="description" itemprop="description">qwqqqq</div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">39</span> <span class="name">文章</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL0xpbmcteXVuY2hp" title="https:&#x2F;&#x2F;github.com&#x2F;Ling-yunchi"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;twitter.com&#x2F;yourname"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;yourname"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvdXNlci9ob21lP2lkPXlvdXJpZA==" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;yourid"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;about.me&#x2F;yourname"><i class="ic i-address-card"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/about/" rel="section"><i class="ic i-user"></i>关于</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/2021/01/22/java%E4%B8%AD%E8%BE%93%E5%85%A5%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E5%9D%91/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2021/01/25/git%E7%AC%94%E8%AE%B0/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"></div><div class="status"><div class="copyright">&copy; 2010 – <span itemprop="copyrightYear">2021</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Ling yunchi @ Ling Yunchi</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"2021/01/22/c++随手笔记/",favicon:{show:"（●´3｀●）やれやれだぜ",hide:"(´Д｀)大変だ！"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:!0,fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(e){return e.includes("#")},function(e){return new RegExp(LOCAL.path+"$").test(e)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script></body></html><!-- rebuild by hrmmi -->
